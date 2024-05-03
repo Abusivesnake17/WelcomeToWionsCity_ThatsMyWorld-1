@@ -81,6 +81,7 @@ public OnPlayerRequestClass(playerid, classid)
 
 public OnPlayerConnect(playerid)
 {
+	if(IsPlayerNPC(playerid)) return 1;
 	return 1;
 }
 
