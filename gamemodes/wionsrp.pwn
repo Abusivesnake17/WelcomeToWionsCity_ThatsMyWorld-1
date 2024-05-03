@@ -1,3 +1,29 @@
+/*
+	WionS Roleplay.
+	Kodlama Başlangıç: 03.05.2024
+	Developer: Abusivesnake & Cyrus
+*/
+
+#pragma compat 1
+#pragma dynamic 700000
+
+// Ellemeyiniz //
+#pragma warning disable 239
+#pragma warning disable 214
+#pragma warning disable 217
+#pragma warning disable 225
+#pragma warning disable 202
+#pragma warning disable 219
+#pragma warning disable 204
+#pragma warning disable 213
+#pragma warning disable 202
+#pragma warning disable 201
+#pragma warning disable 235
+#pragma warning disable 215
+#pragma warning disable 202
+#pragma warning disable 203
+// Ellemeyiniz //
+
 #include <a_samp>
 #include <a_mysql>
 
