@@ -1,6 +1,6 @@
 /*
 	WionS Roleplay.
-	Kodlama Başlangıç: 03.05.2024
+	Kodlama Baslangic: 03.05.2024
 	Developer: Abusivesnake & Cyrus
 */
 
