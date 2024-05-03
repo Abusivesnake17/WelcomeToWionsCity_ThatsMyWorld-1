@@ -441,7 +441,7 @@ CMD:dolap(playerid, params[])
 		new baslik[512], string[1050];
 		format(baslik, sizeof(baslik), "{%s}(%s){fafafa}", GetFactionColor(playerid), olusumetiket(Birlikler[PlayerData[playerid][pFaction]][birlikTip]));
 		format(string, sizeof(string), "{%s}» {FFFFFF}İşbaşı\n{%s}» {FFFFFF}Üniformalar\n{%s}» {FFFFFF}Ekipmanlar\n{FF0000}» {FFFFFF}Silah Sıfırla", GetFactionColor(playerid), GetFactionColor(playerid), GetFactionColor(playerid));
-		Dialog_Show(playerid,PDSDDolap,DIALOG_STYLE_LIST, baslik, string, "Onayla", "Kapat");
+		Dialog_Show(playerid,LSPDDolap,DIALOG_STYLE_LIST, baslik, string, "Onayla", "Kapat");
 	}
 	return 1;
 }
