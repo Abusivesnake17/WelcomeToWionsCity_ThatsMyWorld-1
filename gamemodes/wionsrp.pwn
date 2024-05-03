@@ -26,11 +26,25 @@
 
 #include <a_samp>
 #include <a_mysql>
+#include <izcmd>
+#include <sscanf2>
+#include <easyDialog>
 
 #define SQL_HOST "localhost"
 #define SQL_USER "root"
 #define SQL_PASS ""
 #define SQL_DATA "ab_db"
+
+#define MAX_BIRLIK 100 // Maksimum oluşturulabilecek birlik sayısıdır.
+
+#define BIRLIK_CETE 1
+#define BIRLIK_MAFYA 2
+#define BIRLIK_HABER 3
+#define BIRLIK_LEGAL 4
+#define BIRLIK_LSPD 5
+#define BIRLIK_LSMD 6
+#define BIRLIK_FBI 7
+#define BIRLIK_GOV 8
 
 #define Hata(%0,%1)    \
 	SendClientMessageEx(%0, -1, "{FF0000}[HATA]: {fafafa}"%1)
@@ -51,15 +65,46 @@ enum pData
 	pHelper,
 	pHelperName[24],
 	pMask,
-	pMaskID
+	pMaskID,
+	pFaction
 };
 
 new PlayerData[MAX_PLAYERS][pData];
 
+enum BirlikData
+{
+	birlikID,
+	birlikExists,
+	birlikAd[32],
+	birlikColor,
+	birlikTip,
+	birlikRutbeler,
+	birlikOnaylar[5],
+	birlikYetkilendirme[8],
+	birlikDuyuru[128],
+	birlikKasaPara,
+	OOCDurum,
+	yayinDurum,
+	yayinTipi,
+	ReklamAlimi,
+	ReklamUcreti,
+	ReklamSayisi,
+	bool:CekilisBasladi,
+	cekilisOdul,
+	Text3D:reklamLabel,
+	reklamPickup,
+	Float:reklamPos[3],
+	yayinNumara
+};
+
+new Birlikler[MAX_BIRLIK][BirlikData];
+new BirlikRutbe[MAX_BIRLIK][15][32];
+new BirlikDivizyon[MAX_BIRLIK][5][20];
+
 main()
 {
 	print("\n----------------------------------");
-	print(" Blank Gamemode by your name here");
+	print("[DEVELOPER]: Abusivesnake");
 	print("----------------------------------\n");
 }
 
@@ -134,16 +179,6 @@ public OnVehicleDeath(vehicleid, killerid)
 public OnPlayerText(playerid, text[])
 {
 	return 1;
-}
-
-public OnPlayerCommandText(playerid, cmdtext[])
-{
-	if (strcmp("/mycommand", cmdtext, true, 10) == 0)
-	{
-		// Do something here
-		return 1;
-	}
-	return 0;
 }
 
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
@@ -327,6 +362,30 @@ stock SendClientMessageEx(playerid, color, const text[], {Float, _}:...)
 	return 1;
 }
 
+stock GetFactionType(playerid)
+{
+	if(PlayerData[playerid][pFaction] == -1) return 0;
+	return (Birlikler[PlayerData[playerid][pFaction]][birlikTip]);
+}
+
+stock factcolor(tip)
+{
+	new color[52];
+	if(tip == BIRLIK_LSPD) format(color, sizeof(color), "8B91FF");
+	else if(tip == BIRLIK_LSMD) format(color, sizeof(color), "FF3F6F");
+	else if(tip == BIRLIK_GOV) format(color, sizeof(color), "D9B7D8");
+	else if(tip == BIRLIK_FBI) format(color, sizeof(color), "4427FF");
+	else format(color, sizeof(color), "FAFAFA");
+	return color;
+}
+
+stock GetFactionColor(playerid)
+{
+	new scolor[52];
+	format(scolor, sizeof(scolor), "%s", factcolor(Birlikler[PlayerData[playerid][pFaction]][birlikTip]));
+	return scolor;
+}
+
 ReturnName(playerid, underscore=1)
 {
 	static name[MAX_PLAYER_NAME + 1];
@@ -340,4 +399,49 @@ ReturnName(playerid, underscore=1)
 	}
 	if(PlayerData[playerid][pMask]) format(name, sizeof(name), "Gizli (%d)", PlayerData[playerid][pMaskID]);
 	return name;
+}
+
+stock olusumetiket(fac)
+{
+	new fact[512];
+	if (fac == BIRLIK_LSPD)
+	{
+		format(fact, sizeof(fact), "@lspd");
+	}
+	else if (fac == BIRLIK_LSMD)
+	{
+		format(fact, sizeof(fact), "@lsfmd");
+	}
+	else if (fac == BIRLIK_FBI)
+	{
+		format(fact, sizeof(fact), "@fbi");
+	}
+	else if (fac == BIRLIK_GOV)
+	{
+		format(fact, sizeof(fact), "@gov");
+	}
+	else if (fac == BIRLIK_HABER)
+	{
+		format(fact, sizeof(fact), "@tv");
+	}
+	else
+	{
+		format(fact, sizeof(fact), "@birlik");
+	}
+	return fact;
+}
+
+//  --  [KOMUTLAR]  --  //
+
+CMD:dolap(playerid, params[])
+{
+	if(GetFactionType(playerid) == BIRLIK_LSPD)
+	{
+		if(!IsPlayerInRangeOfPoint(playerid, 5.0, 1490.451049, -1070.520263, 1025.005859)) return Hata(playerid, "Dolaba yeterince yakın değilsiniz!");
+		new baslik[512], string[1050];
+		format(baslik, sizeof(baslik), "{%s}(%s){fafafa}", GetFactionColor(playerid), olusumetiket(Birlikler[PlayerData[playerid][pFaction]][birlikTip]));
+		format(string, sizeof(string), "{%s}» {FFFFFF}İşbaşı\n{%s}» {FFFFFF}Üniformalar\n{%s}» {FFFFFF}Ekipmanlar\n{FF0000}» {FFFFFF}Silah Sıfırla", GetFactionColor(playerid), GetFactionColor(playerid), GetFactionColor(playerid));
+		Dialog_Show(playerid,PDSDDolap,DIALOG_STYLE_LIST, baslik, string, "Onayla", "Kapat");
+	}
+	return 1;
 }
