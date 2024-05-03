@@ -32,6 +32,9 @@
 #define SQL_PASS ""
 #define SQL_DATA "ab_db"
 
+#define Hata(%0,%1)    \
+	SendClientMessageEx(%0, -1, "{FF0000}[HATA]: {fafafa}"%1)
+
 new MySQL:mysqlC;
 
 enum pData
@@ -46,7 +49,9 @@ enum pData
 	pAdmin,
 	pAdminName[24],
 	pHelper,
-	pHelperName[24]
+	pHelperName[24],
+	pMask,
+	pMaskID
 };
 
 new PlayerData[MAX_PLAYERS][pData];
@@ -82,6 +87,12 @@ public OnPlayerRequestClass(playerid, classid)
 public OnPlayerConnect(playerid)
 {
 	if(IsPlayerNPC(playerid)) return 1;
+	if(!IsValidRoleplayName(ReturnName(playerid)))
+	{
+		Hata(playerid, "Isminiz roleplaye uygun degil! ( Ornek: Javier_Taylor )");
+		Kick(playerid);
+		return 1;
+	}
 	return 1;
 }
 
@@ -258,4 +269,65 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 {
 	return 1;
+}
+
+//  --  [STOCKLAR]  --  //
+
+stock IsValidRoleplayName(const name[]) 
+{
+	if(!name[0] || strfind(name, "_") == -1) return 0;
+	else for(new i = 0, len = strlen(name); i != len; i ++) 
+	{
+	    if((i == 0) && (name[i] < 'A' || name[i] > 'Z')) return 0;
+		else if((i != 0 && i < len  && name[i] == '_') && (name[i + 1] < 'A' || name[i + 1] > 'Z')) return 0;
+		else if((name[i] < 'A' || name[i] > 'Z') && (name[i] < 'a' || name[i] > 'z') && name[i] != '_' && name[i] != '.') return 0;
+	}
+	return 1;
+}
+
+stock SendClientMessageEx(playerid, color, const text[], {Float, _}:...)
+{
+	static args, str[144];
+	if((args = numargs()) == 3)
+	{
+	    SendClientMessage(playerid, color, text);
+	}
+	else
+	{
+		while(--args >= 3)
+		{
+			#emit LCTRL 5
+			#emit LOAD.alt args
+			#emit SHL.C.alt 2
+			#emit ADD.C 12
+			#emit ADD
+			#emit LOAD.I
+			#emit PUSH.pri
+		}
+		#emit PUSH.S text
+		#emit PUSH.C 144
+		#emit PUSH.C str
+		#emit PUSH.S 8
+		#emit SYSREQ.C format
+		#emit LCTRL 5
+		#emit SCTRL 4
+		SendClientMessage(playerid, color, str);
+		#emit RETN
+	}
+	return 1;
+}
+
+ReturnName(playerid, underscore=1)
+{
+	static name[MAX_PLAYER_NAME + 1];
+	GetPlayerName(playerid, name, sizeof(name));
+	if(!underscore) 
+	{
+	    for(new i = 0, len = strlen(name); i < len; i ++) 
+		{
+	        if (name[i] == '_') name[i] = ' ';
+		}
+	}
+	if(PlayerData[playerid][pMask]) format(name, sizeof(name), "Gizli (%d)", PlayerData[playerid][pMaskID]);
+	return name;
 }
