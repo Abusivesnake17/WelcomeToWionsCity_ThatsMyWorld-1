@@ -37,14 +37,15 @@
 
 #define MAX_BIRLIK 100 // Maksimum oluşturulabilecek birlik sayısıdır.
 
-#define BIRLIK_CETE 1
-#define BIRLIK_MAFYA 2
-#define BIRLIK_HABER 3
-#define BIRLIK_LEGAL 4
-#define BIRLIK_LSPD 5
-#define BIRLIK_LSMD 6
-#define BIRLIK_FBI 7
-#define BIRLIK_GOV 8
+#define BIRLIK_CETE      (1)
+#define BIRLIK_MAFYA     (2)
+#define BIRLIK_HABER     (3)
+#define BIRLIK_LEGAL     (4)
+#define BIRLIK_LSPD      (5)
+#define BIRLIK_LSMD      (6)
+#define BIRLIK_FBI       (7)
+#define BIRLIK_GOV       (8)
+#define BIRLIK_TAMIRHANE (9)
 
 #define Hata(%0,%1)    \
 	SendClientMessageEx(%0, -1, "{FF0000}[HATA]: {fafafa}"%1)
@@ -424,6 +425,10 @@ stock olusumetiket(fac)
 	{
 		format(fact, sizeof(fact), "@tv");
 	}
+	else if(fac == BIRLIK_TAMIRHANE)
+	{
+		format(fact, sizeof(fact), "@mec");
+	}
 	else
 	{
 		format(fact, sizeof(fact), "@birlik");
@@ -441,7 +446,7 @@ CMD:dolap(playerid, params[])
 		new baslik[512], string[1050];
 		format(baslik, sizeof(baslik), "{%s}(%s){fafafa}", GetFactionColor(playerid), olusumetiket(Birlikler[PlayerData[playerid][pFaction]][birlikTip]));
 		format(string, sizeof(string), "{%s}» {FFFFFF}İşbaşı\n{%s}» {FFFFFF}Üniformalar\n{%s}» {FFFFFF}Ekipmanlar\n{FF0000}» {FFFFFF}Silah Sıfırla", GetFactionColor(playerid), GetFactionColor(playerid), GetFactionColor(playerid));
-		Dialog_Show(playerid,LSPDDolap,DIALOG_STYLE_LIST, baslik, string, "Onayla", "Kapat");
+		Dialog_Show(playerid, LSPDDolap, DIALOG_STYLE_LIST, baslik, string, "Onayla", "Kapat");
 	}
 	return 1;
 }
