@@ -691,7 +691,7 @@ CMD:dolap(playerid, params[])
 {
 	if(GetFactionType(playerid) == BIRLIK_LSPD)
 	{
-		if(!IsPlayerInRangeOfPoint(playerid, 5.0, 1490.451049, -1070.520263, 1025.005859)) return Hata(playerid, "Dolaba yeterince yakın değilsiniz!");
+		if(!IsPlayerInRangeOfPoint(playerid, 5.0, -1605.508666, 711.299377, 13.867187)) return Hata(playerid, "Dolaba yeterince yakın değilsiniz!");
 		new baslik[512], string[1050];
 		format(baslik, sizeof(baslik), "{%s}(%s){fafafa}", GetFactionColor(playerid), olusumetiket(Birlikler[PlayerData[playerid][pFaction]][birlikTip]));
 		format(string, sizeof(string), "{%s}» {FFFFFF}İşbaşı\n{%s}» {FFFFFF}Üniformalar\n{%s}» {FFFFFF}Ekipmanlar\n{FF0000}» {FFFFFF}Silah Sıfırla", GetFactionColor(playerid), GetFactionColor(playerid), GetFactionColor(playerid));
