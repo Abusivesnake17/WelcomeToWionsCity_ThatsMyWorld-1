@@ -43,6 +43,7 @@
 
 #define MAX_BIRLIK 100 // Maksimum oluşturulabilecek birlik sayısıdır.
 #define MAX_BIRLIK 100 // Maksimum oluşturulabilecek birlik sayısıdır.
+#define MAX_ARAC 1200 // Maksimum oluşturulabilecek araç sayısıdır.
 
 #define BIRLIK_CETE      (1)
 #define BIRLIK_MAFYA     (2)
@@ -53,6 +54,8 @@
 #define BIRLIK_FBI       (7)
 #define BIRLIK_GOV       (8)
 #define BIRLIK_TAMIRHANE (9)
+
+#define INVALID_FACTION_ID -2
 
 #define Hata(%0,%1)    \
 	SendClientMessageEx(%0, -1, "{FF0000}[HATA]: {fafafa}"%1)
@@ -67,6 +70,34 @@
 	SendClientMessageEx(%0, -1, "{FF9900}[UYARI]: {fafafa}"%1)
 
 new MySQL:mysqlC;
+
+enum a_CopEnum
+{
+    olusumamodel,
+    olusumaname[24]
+}
+
+new AttachCops[][a_CopEnum] = 
+{
+	{19141, "SWAT Kaskı1"},
+	{19142, "SWAT Zırhı1"},
+	{18636, "Polis Kepi1"},
+	{19099, "Polis Kepi2"},
+	{19100, "Polis Kepi3"},
+	{18637, "Polis Kalkanı1"},
+	{19161, "Polis Şapkası1"},
+	{19162, "Polis Şapkası2"},
+	{19200, "Polis Kaskı1"},
+	{19138, "Polis Gözlüğü1"},
+	{19139, "Polis Gözlüğü2"},
+	{19140, "Polis Gözlüğü3"},
+	{19347, "Rozet"},
+	{19472, "Gaz Maskesi"},
+	{19773, "Kılıf"},
+	{19785, "Senior Arma"},
+	{19521, ""},
+	{19520, ""}
+};
 
 enum pData
 {
@@ -84,12 +115,78 @@ enum pData
 	pMask,
 	pMaskID,
 	pFaction,
-	pLSPDDuty,
+	pOnDuty,
+	pOnDutySkin,
 	pFactionRutbe,
-	pFactionDivizyon
+	pFactionDivizyon,
+	pSkin,
+	pTazer,
+	pBeanbag,
+	pASlot[10],
+	pTSlot[10],
+	pABone[10],
+	pARenk[10],
+	pSilahlar[13],
+	pMermiler[13],
+	pDinle,
+	pLSPDDuty
 };
 
 new PlayerData[MAX_PLAYERS][pData];
+
+enum AracBilgi
+{
+	aracID,
+	aracExists,
+	aracModel,
+	aracSahip,
+	aracDisplay,
+	Float:aracPos[4],
+	aracInterior,
+	aracWorld,
+	aracRenkler[2],
+	aracPaintjob,
+	aracZirh,
+	aracKilit,
+	aracVergi,
+	aracVergiSure,
+	aracMods[14],
+	aracGaraj,
+	TaksiPlaka,
+	aracBaglandi,
+	aracBaglandiCeza,
+	aracTicket,
+	aracTicketTime,
+	aracElKonuldu,
+	aracFaction,
+	aracFactionType,
+	aracKira,
+	aracKiralayan,
+	aracTip,
+	aracSatilik,
+	aracPlaka[24],
+	aracKiraZaman,
+	aracSilahlar[5],
+	aracMermiler[5],
+	aracFiyat,
+	aracUyusturucu,
+	Float:aracKM,
+	Float:aracBenzin,
+	aracVehicle,
+	Text3D:aracLabel,
+	bool:aracCamlar,
+	bool:aracSirenAcik,
+	SirenObject,
+	bool:aracRadar,
+	TaksiObje,
+	Taksimetre,
+	OturumKazanci,
+	bool:aracPlakaSok,
+	aracYuk,
+	aracDorse
+};
+
+new AracInfo[MAX_ARAC][AracBilgi];
 
 enum BirlikData
 {
@@ -120,6 +217,7 @@ new Iterator:CekilisKatilimcilar[MAX_BIRLIK]<300>;
 new Birlikler[MAX_BIRLIK][BirlikData];
 new BirlikRutbe[MAX_BIRLIK][15][32];
 new BirlikDivizyon[MAX_BIRLIK][5][20];
+new Float:AksesuarData[MAX_PLAYERS][10][10];
 
 AntiDeAMX()
 {
@@ -393,6 +491,219 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 }
 
 //  --  [STOCKLAR]  --  //
+
+RGBAToARGB(rgba) return rgba >>> 8 | rgba << 24;
+
+stock BirlikUyeSayisi(birlikid)
+{
+	new query[100],Cache: _query;
+	format(query,sizeof(query),"SELECT null FROM `oyuncular` WHERE `Birlik` = '%d'",birlikid);
+	_query = mysql_query(mysqlC, query);
+	new rows;
+	cache_get_row_count(rows);
+	cache_delete(_query);
+	return rows;
+}
+
+stock Dinleyici_Sayisi(birlikid)
+{
+	new sayi = 0;
+	foreach(new i:Player)
+	{
+	    if(PlayerData[i][pDinle] == birlikid)
+	    {
+	        sayi++;
+		}
+	}
+	return sayi;
+}
+
+stock SQL_ReturnEscaped(const string[])
+{
+	new entry[256];
+	mysql_escape_string(string, entry, sizeof(entry) , mysqlC);
+	return entry;
+}
+
+stock Birlik_Kaydet(bid)
+{
+	static query[2700];
+	format(query,sizeof(query),"UPDATE `birlikler` SET `bisim` = '%s',`brenk` = '%d',`btip` = '%d',`bRutbeler` = '%d',`bduyuru` = '%s',`bkasacash` = '%d',`oocdurum` = '%d', `sistemselonay` = '%d', `silahonay` = '%d', `uyusturucuonay` = '%d', `graffitionay` = '%d', `hoodonay` = '%d'",
+	SQL_ReturnEscaped(Birlikler[bid][birlikAd]),
+	Birlikler[bid][birlikColor],
+	Birlikler[bid][birlikTip],
+	Birlikler[bid][birlikRutbeler],
+	SQL_ReturnEscaped(Birlikler[bid][birlikDuyuru]),
+	Birlikler[bid][birlikKasaPara],
+	Birlikler[bid][OOCDurum],
+	Birlikler[bid][birlikOnaylar][0],
+	Birlikler[bid][birlikOnaylar][1],
+	Birlikler[bid][birlikOnaylar][2],
+	Birlikler[bid][birlikOnaylar][3],
+	Birlikler[bid][birlikOnaylar][4]);
+
+	format(query,sizeof(query),"%s, `byetki1` = '%d',`byetki2` = '%d',`byetki3` = '%d',`byetki4` = '%d',`byetki5` = '%d',`byetki6` = '%d',`byetki7` = '%d',`byetki8` = '%d',`bdivizyon1` = '%s',`bdivizyon2` = '%s',`bdivizyon3` = '%s',`bdivizyon4` = '%s',`bdivizyon5` = '%s'",
+	query,
+	Birlikler[bid][birlikYetkilendirme][0],
+	Birlikler[bid][birlikYetkilendirme][1],
+	Birlikler[bid][birlikYetkilendirme][2],
+	Birlikler[bid][birlikYetkilendirme][3],
+	Birlikler[bid][birlikYetkilendirme][4],
+	Birlikler[bid][birlikYetkilendirme][5],
+	Birlikler[bid][birlikYetkilendirme][6],
+	Birlikler[bid][birlikYetkilendirme][7],
+	SQL_ReturnEscaped(BirlikDivizyon[bid][0]),
+	SQL_ReturnEscaped(BirlikDivizyon[bid][1]),
+	SQL_ReturnEscaped(BirlikDivizyon[bid][2]),
+	SQL_ReturnEscaped(BirlikDivizyon[bid][3]),
+	SQL_ReturnEscaped(BirlikDivizyon[bid][4]));
+
+	format(query, sizeof(query), "%s, `yayindurum` = '%d', `yayintipi` = '%d', `reklamalimi` = '%d', `reklamucreti` = '%d', `reklamsayisi` = '%d', `aktifdinleyici` = '%d', `BirlikUyeSayisi` = '%d', `reklamx` = '%f', `reklamy` = '%f', `reklamz` = '%f'",query,Birlikler[bid][yayinDurum], Birlikler[bid][yayinTipi],Birlikler[bid][ReklamAlimi],Birlikler[bid][ReklamUcreti], Birlikler[bid][ReklamSayisi], Dinleyici_Sayisi(bid), BirlikUyeSayisi(bid),
+	Birlikler[bid][reklamPos][0], Birlikler[bid][reklamPos][1], Birlikler[bid][reklamPos][2]);
+	format(query, sizeof(query), "%s, `brutbe1` = '%s', `brutbe2` = '%s', `brutbe3` = '%s', `brutbe4` = '%s', `brutbe5` = '%s', `brutbe6` = '%s', `brutbe7` = '%s', `brutbe8` = '%s', `brutbe9` = '%s', `brutbe10` = '%s', `brutbe11` = '%s', `brutbe12` = '%s', `brutbe13` = '%s', `brutbe14` = '%s', `brutbe15` = '%s' WHERE `bid` = '%d'",
+	query,
+	BirlikRutbe[bid][0],
+ 	BirlikRutbe[bid][1],
+  	BirlikRutbe[bid][2],
+   	BirlikRutbe[bid][3],
+    BirlikRutbe[bid][4],
+    BirlikRutbe[bid][5],
+    BirlikRutbe[bid][6],
+    BirlikRutbe[bid][7],
+    BirlikRutbe[bid][8],
+    BirlikRutbe[bid][9],
+    BirlikRutbe[bid][10],
+    BirlikRutbe[bid][11],
+    BirlikRutbe[bid][12],
+    BirlikRutbe[bid][13],
+    BirlikRutbe[bid][14],
+    Birlikler[bid][birlikID]);
+    mysql_query(mysqlC, query, false);
+    return 1;
+}
+
+stock AksesuarTak(playerid, index)
+{
+	if(PlayerData[playerid][pARenk][index] == 0) return SetPlayerAttachedObject(playerid,index,PlayerData[playerid][pASlot][index],PlayerData[playerid][pABone][index],AksesuarData[playerid][index][0],AksesuarData[playerid][index][1],AksesuarData[playerid][index][2],AksesuarData[playerid][index][3],AksesuarData[playerid][index][4],AksesuarData[playerid][index][5],AksesuarData[playerid][index][6],AksesuarData[playerid][index][7],AksesuarData[playerid][index][8]);
+	switch(PlayerData[playerid][pARenk][index])
+	{
+	    case 1: SetPlayerAttachedObject(playerid,index,PlayerData[playerid][pASlot][index],PlayerData[playerid][pABone][index],AksesuarData[playerid][index][0],AksesuarData[playerid][index][1],AksesuarData[playerid][index][2],AksesuarData[playerid][index][3],AksesuarData[playerid][index][4],AksesuarData[playerid][index][5],AksesuarData[playerid][index][6],AksesuarData[playerid][index][7],AksesuarData[playerid][index][8], RGBAToARGB(0x000000FF), RGBAToARGB(0x000000FF));
+	    case 2: SetPlayerAttachedObject(playerid,index,PlayerData[playerid][pASlot][index],PlayerData[playerid][pABone][index],AksesuarData[playerid][index][0],AksesuarData[playerid][index][1],AksesuarData[playerid][index][2],AksesuarData[playerid][index][3],AksesuarData[playerid][index][4],AksesuarData[playerid][index][5],AksesuarData[playerid][index][6],AksesuarData[playerid][index][7],AksesuarData[playerid][index][8], RGBAToARGB(0xFF0000FF), RGBAToARGB(0xFF0000FF));
+	    case 3: SetPlayerAttachedObject(playerid,index,PlayerData[playerid][pASlot][index],PlayerData[playerid][pABone][index],AksesuarData[playerid][index][0],AksesuarData[playerid][index][1],AksesuarData[playerid][index][2],AksesuarData[playerid][index][3],AksesuarData[playerid][index][4],AksesuarData[playerid][index][5],AksesuarData[playerid][index][6],AksesuarData[playerid][index][7],AksesuarData[playerid][index][8], RGBAToARGB(0x0000BBFF), RGBAToARGB(0x0000BBFF));
+	    case 4: SetPlayerAttachedObject(playerid,index,PlayerData[playerid][pASlot][index],PlayerData[playerid][pABone][index],AksesuarData[playerid][index][0],AksesuarData[playerid][index][1],AksesuarData[playerid][index][2],AksesuarData[playerid][index][3],AksesuarData[playerid][index][4],AksesuarData[playerid][index][5],AksesuarData[playerid][index][6],AksesuarData[playerid][index][7],AksesuarData[playerid][index][8], RGBAToARGB(0xFF9900FF), RGBAToARGB(0xFF9900FF));
+	    case 5: SetPlayerAttachedObject(playerid,index,PlayerData[playerid][pASlot][index],PlayerData[playerid][pABone][index],AksesuarData[playerid][index][0],AksesuarData[playerid][index][1],AksesuarData[playerid][index][2],AksesuarData[playerid][index][3],AksesuarData[playerid][index][4],AksesuarData[playerid][index][5],AksesuarData[playerid][index][6],AksesuarData[playerid][index][7],AksesuarData[playerid][index][8], RGBAToARGB(0xa126edFF), RGBAToARGB(0xa126edFF));
+	    case 6: SetPlayerAttachedObject(playerid,index,PlayerData[playerid][pASlot][index],PlayerData[playerid][pABone][index],AksesuarData[playerid][index][0],AksesuarData[playerid][index][1],AksesuarData[playerid][index][2],AksesuarData[playerid][index][3],AksesuarData[playerid][index][4],AksesuarData[playerid][index][5],AksesuarData[playerid][index][6],AksesuarData[playerid][index][7],AksesuarData[playerid][index][8], RGBAToARGB(0xffff00FF), RGBAToARGB(0xffff00FF));
+	    case 7: SetPlayerAttachedObject(playerid,index,PlayerData[playerid][pASlot][index],PlayerData[playerid][pABone][index],AksesuarData[playerid][index][0],AksesuarData[playerid][index][1],AksesuarData[playerid][index][2],AksesuarData[playerid][index][3],AksesuarData[playerid][index][4],AksesuarData[playerid][index][5],AksesuarData[playerid][index][6],AksesuarData[playerid][index][7],AksesuarData[playerid][index][8], RGBAToARGB(0x33AA33FF), RGBAToARGB(0x33AA33FF));
+	}
+	return 1;
+}
+
+stock AksesuarAyarla(playerid)
+{
+    for (new i = 0; i < 5; i ++) {
+		if(!PlayerData[playerid][pTSlot][i])
+		{
+			RemovePlayerAttachedObject(playerid, i);
+		}
+		else
+		{
+		    AksesuarTak(playerid, i);
+		}
+	}
+	return 1;
+}
+
+stock OlusumAksesuariSil(iTargetID)
+{
+	for(new iToyIter; iToyIter < 5; ++iToyIter) 
+	{
+		for(new LoopRapist; LoopRapist < sizeof(AttachCops); ++LoopRapist) 
+		{
+			if(AttachCops[LoopRapist][olusumamodel] == PlayerData[iTargetID][pASlot][iToyIter]) 
+			{
+                RemovePlayerAttachedObject(iTargetID, iToyIter);
+                PlayerData[iTargetID][pASlot][iToyIter] = 0;
+				AksesuarAyarla(iTargetID);
+			}
+		}
+	}
+	Bilgi(iTargetID, "Olusuma ait olan tum aksesuarlar kaldirildi.");
+	return 1;
+}
+
+ResetWeapons(playerid)
+{
+	ResetPlayerWeapons(playerid);
+
+	for (new i = 0; i < 13; i ++) {
+		PlayerData[playerid][pSilahlar][i] = 0;
+		PlayerData[playerid][pMermiler][i] = 0;
+	}
+	return 1;
+}
+
+stock Oyuncu_Kaydet(playerid, disconnect=1)
+{
+	new query[189000];
+	format(query, sizeof(query), "UPDATE `oyuncular` SET `Birlik` = '%d',`BirlikRutbe` = '%d',`BirlikDivizyon` = '%d'",
+	PlayerData[playerid][pFaction],
+	PlayerData[playerid][pFactionRutbe],
+	PlayerData[playerid][pFactionDivizyon]);
+	mysql_tquery(mysqlC, query, "OyuncuKaydedildi", "d", playerid);
+}
+
+function OyuncuKaydedildi(playerid)
+{
+	new rows = cache_affected_rows();
+	if(!rows) printf("%s kullanicinin verilerinde degisiklik olmadi.", ReturnName(playerid));
+	else printf("%s adli kullanicinin verileri kayit edildi.", ReturnName(playerid));
+	return 1;
+}
+
+BirliktenAt(playerid)
+{
+	if(PlayerData[playerid][pFaction] == -1) return 1;
+	if(Birlikler[PlayerData[playerid][pFaction]][birlikTip] != BIRLIK_CETE && Birlikler[PlayerData[playerid][pFaction]][birlikTip] != BIRLIK_MAFYA && Birlikler[PlayerData[playerid][pFaction]][birlikTip] != BIRLIK_LEGAL)
+	{
+	    SetPlayerSkin(playerid, PlayerData[playerid][pSkin]);
+		SetPlayerColor(playerid, 0xFFFFFFFF);
+		PlayerData[playerid][pOnDuty] = 0;
+		PlayerData[playerid][pOnDutySkin] = 0;
+		PlayerData[playerid][pTazer] = 0;
+		PlayerData[playerid][pBeanbag] = 0;
+		OlusumAksesuariSil(playerid);
+		ResetWeapons(playerid);
+	}
+	Birlik_Kaydet(PlayerData[playerid][pFaction]);
+    PlayerData[playerid][pFaction] = -1;
+    PlayerData[playerid][pFactionRutbe] = 0;
+    PlayerData[playerid][pFactionDivizyon] = 0;
+   	for (new i = 0; i < MAX_ARAC; i ++) if (AracInfo[i][aracExists] && AracInfo[i][aracSahip] == PlayerData[playerid][pID])
+	{
+	    AracInfo[i][aracFactionType] = 0;
+		AracInfo[i][aracFaction] = -1;
+	}
+	return 1;
+}
+
+stock OyundaDegil(playerid)
+{
+	if(!IsPlayerConnected(playerid) || GetPVarInt(playerid,"Logged") == 0)
+	{
+	    return 0;
+	}
+	return 1;
+}
+
+GetFactionIDBySQL(sqlid)
+{
+    new i;
+    for(i = 0; i < MAX_BIRLIK; i++)
+    {
+        if(Birlikler[i][birlikID] == sqlid && Birlikler[i][birlikExists]) return i;
+    }
+    return INVALID_FACTION_ID;
+}
 
 stock Birlik_Olustur(birlikisim[],tip)
 {
@@ -774,11 +1085,11 @@ CMD:gotopos(playerid,params[])
 CMD:birlikolustur(playerid,params[])
 {
 	new id = -1,type,name[32],str[50], lid;
-	if(PlayerData[playerid][pAdmin] < 4) return YetkinizYok(playerid);
+	if(!IsPlayerAdmin(playerid)) return YetkinizYok(playerid);
 	if(sscanf(params, "ds[32]", type, name))
 	{
 	    Kullanim(playerid,"/birlikolustur [Tip] [Isim]");
-     	SendClientMessage(playerid, COLOR_YELLOW, "[TİP]:{FFFFFF}1: Cete 2: Mafya 3: Yayın Ajansi 4: Legal 5: LSPD 6: LSFMD 7: FBI 8: GOV 9: Mekanik");
+     	SendClientMessage(playerid, COLOR_YELLOW, "[TIP]:{FFFFFF}1: Cete 2: Mafya 3: Yayin Ajansi 4: Legal 5: LSPD 6: LSFMD 7: FBI 8: GOV 9: Mekanik");
    		return 1;
 	}
 	if(type < 1 || type > 9) return Hata(playerid,"Tip 1 ile 9 arasinda olmalidir!");
@@ -791,10 +1102,37 @@ CMD:birlikolustur(playerid,params[])
 CMD:birliksil(playerid, params[])
 {
 	static id = 0;
-    if(PlayerData[playerid][pAdmin] < 4) return YetkinizYok(playerid);
+    if(!IsPlayerAdmin(playerid)) return YetkinizYok(playerid);
 	if(sscanf(params, "d", id)) return Kullanim(playerid, "/birliksil [Birlik ID]");
 	if((id < 0 || id >= MAX_BIRLIK) || !Birlikler[id][birlikExists]) return Hata(playerid, "Gecersiz ID!");
 	Birlik_Sil(id);
 	Uyari(playerid, "Birlik ID %d silindi.", id);
 	return 1;
+}
+
+CMD:setleader(playerid, params[])
+{
+    new targetid, factionid, sqlid;
+    if(!IsPlayerAdmin(playerid)) return YetkinizYok(playerid);
+    if(sscanf(params, "ui", targetid, sqlid)) return Kullanim(playerid, "/setleader [ID/Isim] [SQL ID] (-1 yazarsan liderlikten atilir)");
+	if(factionid == INVALID_FACTION_ID) return Hata(playerid, "Hatali birlik SQL ID!");
+    factionid = GetFactionIDBySQL(sqlid);
+    if(factionid == -1)
+    {
+        BirliktenAt(targetid);
+        Bilgi(playerid, "%s adlı oyuncuyu birlik liderliğinden attınız.", ReturnName(targetid, 0));
+        Bilgi(targetid, "%s adlı yetkili sizi birlik liderliğinden attı.", ReturnName(playerid, 0));
+        Oyuncu_Kaydet(targetid);
+    }
+    else
+    {
+        BirliktenAt(targetid);
+        PlayerData[targetid][pFaction] = factionid;
+        PlayerData[targetid][pFactionRutbe] = Birlikler[factionid][birlikRutbeler];
+        PlayerData[targetid][pFactionDivizyon] = 0;
+        Bilgi(playerid, "%s adlı oyuncuyu \"%s\" adlı birliğin lideri yaptınız.", ReturnName(targetid, 0), Birlikler[factionid][birlikAd]);
+        Bilgi(targetid, "%s adlı yetkili seni \"%s\" adlı birliğin lideri yaptı.", ReturnName(playerid, 0), Birlikler[factionid][birlikAd]);
+        Oyuncu_Kaydet(targetid);
+    }
+    return 1;
 }
