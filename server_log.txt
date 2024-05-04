@@ -779,3 +779,71 @@ v0.3.7-R2, (C)2005-2015 SA-MP Team
 [00:42:51] [connection] incoming connection: 127.0.0.1:57497 id: 0
 [00:42:51] [join] Javier_Taylor has joined the server (0:127.0.0.1)
 [00:43:00] RCON (In-Game): Player #0 (Javier_Taylor) has logged in.
+[00:46:04] RCON (In-Game): Player [Javier_Taylor] sent command: gmx
+[00:46:16] [MySQL]: Veritabani baglantisi kuruluyor...
+[00:46:16] [MySQL]: Veritabani baglantisi basarili!
+[00:46:16] 
+----------------------------------
+[00:46:16] [DEVELOPER]: Abusivesnake
+[00:46:16] ----------------------------------
+
+[00:46:16] Number of vehicle models: 0
+[01:03:18] RCON (In-Game): Player [Javier_Taylor] sent command: gmx
+[01:03:30] [MySQL]: Veritabani baglantisi kuruluyor...
+[01:03:30] [MySQL]: Veritabani baglantisi basarili!
+[01:03:30] 
+----------------------------------
+[01:03:30] [DEVELOPER]: Abusivesnake
+[01:03:30] ----------------------------------
+
+[01:03:30] Number of vehicle models: 0
+[01:04:20] [debug] Run time error 4: "Array index out of bounds"
+[01:04:20] [debug]  Attempted to read/write array element at negative index -2
+[01:04:20] [debug] AMX backtrace:
+[01:04:20] [debug] #0 00013c9c in public cmd_setleader (playerid=0, params[]=@00215dc8 "0 0") at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\gamemodes\wionsrp.pwn:1131
+[01:04:20] [debug] #1 native CallLocalFunction () in samp-server.exe
+[01:04:20] [debug] #2 000002f8 in public OnPlayerCommandText (playerid=0, cmdtext[]=@00215d8c "/setleader 0 0") at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\pawno\include\izcmd.inc:112
+[01:04:26] [debug] Run time error 4: "Array index out of bounds"
+[01:04:26] [debug]  Attempted to read/write array element at negative index -2
+[01:04:26] [debug] AMX backtrace:
+[01:04:26] [debug] #0 0000ec70 in BirliktenAt (playerid=0) at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\gamemodes\wionsrp.pwn:666
+[01:04:26] [debug] #1 00013bd8 in public cmd_setleader (playerid=0, params[]=@00215dc8 "0 1") at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\gamemodes\wionsrp.pwn:1130
+[01:04:26] [debug] #2 native CallLocalFunction () in samp-server.exe
+[01:04:26] [debug] #3 000002f8 in public OnPlayerCommandText (playerid=0, cmdtext[]=@00215d8c "/setleader 0 1") at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\pawno\include\izcmd.inc:112
+[01:04:29] [debug] Run time error 4: "Array index out of bounds"
+[01:04:29] [debug]  Attempted to read/write array element at negative index -2
+[01:04:29] [debug] AMX backtrace:
+[01:04:29] [debug] #0 0000ec70 in BirliktenAt (playerid=0) at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\gamemodes\wionsrp.pwn:666
+[01:04:29] [debug] #1 00013bd8 in public cmd_setleader (playerid=0, params[]=@00215dc8 "0 0") at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\gamemodes\wionsrp.pwn:1130
+[01:04:29] [debug] #2 native CallLocalFunction () in samp-server.exe
+[01:04:29] [debug] #3 000002f8 in public OnPlayerCommandText (playerid=0, cmdtext[]=@00215d8c "/setleader 0 0") at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\pawno\include\izcmd.inc:112
+[01:04:49] [debug] Run time error 4: "Array index out of bounds"
+[01:04:49] [debug]  Attempted to read/write array element at negative index -2
+[01:04:49] [debug] AMX backtrace:
+[01:04:49] [debug] #0 00011fd8 in GetFactionType (playerid=0) at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\gamemodes\wionsrp.pwn:964
+[01:04:49] [debug] #1 00012950 in public cmd_dolap (playerid=0, params[]=@00215da8 "") at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\gamemodes\wionsrp.pwn:1038
+[01:04:49] [debug] #2 native CallLocalFunction () in samp-server.exe
+[01:04:49] [debug] #3 00000350 in public OnPlayerCommandText (playerid=0, cmdtext[]=@00215d8c "/dolap") at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\pawno\include\izcmd.inc:120
+[01:06:51] RCON (In-Game): Player [Javier_Taylor] sent command: gmx
+[01:07:03] [MySQL]: Veritabani baglantisi kuruluyor...
+[01:07:03] [MySQL]: Veritabani baglantisi basarili!
+[01:07:03] 
+----------------------------------
+[01:07:03] [DEVELOPER]: Abusivesnake
+[01:07:03] ----------------------------------
+
+[01:07:03] Number of vehicle models: 0
+[01:07:21] [debug] Run time error 4: "Array index out of bounds"
+[01:07:21] [debug]  Attempted to read/write array element at negative index -2
+[01:07:21] [debug] AMX backtrace:
+[01:07:21] [debug] #0 00013d50 in public cmd_setleader (playerid=0, params[]=@00216230 "0 0") at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\gamemodes\wionsrp.pwn:1131
+[01:07:21] [debug] #1 native CallLocalFunction () in samp-server.exe
+[01:07:21] [debug] #2 000002f8 in public OnPlayerCommandText (playerid=0, cmdtext[]=@002161f4 "/setleader 0 0") at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\pawno\include\izcmd.inc:112
+[01:07:23] [debug] Run time error 4: "Array index out of bounds"
+[01:07:23] [debug]  Attempted to read/write array element at negative index -2
+[01:07:23] [debug] AMX backtrace:
+[01:07:23] [debug] #0 0001208c in GetFactionType (playerid=0) at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\gamemodes\wionsrp.pwn:964
+[01:07:23] [debug] #1 00012a04 in public cmd_dolap (playerid=0, params[]=@00216210 "") at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\gamemodes\wionsrp.pwn:1038
+[01:07:23] [debug] #2 native CallLocalFunction () in samp-server.exe
+[01:07:23] [debug] #3 00000350 in public OnPlayerCommandText (playerid=0, cmdtext[]=@002161f4 "/dolap") at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\pawno\include\izcmd.inc:120
+[01:07:36] [part] Javier_Taylor has left the server (0:1)
