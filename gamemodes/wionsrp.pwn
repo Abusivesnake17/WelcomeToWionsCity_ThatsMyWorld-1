@@ -50,6 +50,9 @@
 #define Hata(%0,%1)    \
 	SendClientMessageEx(%0, -1, "{FF0000}[HATA]: {fafafa}"%1)
 
+#define Bilgi(%0,%1)    \
+	SendClientMessageEx(%0, -1, "{33CC33}[BİLGİ]: {fafafa}"%1)
+
 new MySQL:mysqlC;
 
 enum pData
@@ -67,7 +70,8 @@ enum pData
 	pHelperName[24],
 	pMask,
 	pMaskID,
-	pFaction
+	pFaction,
+	pLSPDDuty
 };
 
 new PlayerData[MAX_PLAYERS][pData];
@@ -445,7 +449,7 @@ CMD:dolap(playerid, params[])
 		if(!IsPlayerInRangeOfPoint(playerid, 5.0, 1490.451049, -1070.520263, 1025.005859)) return Hata(playerid, "Dolaba yeterince yakın değilsiniz!");
 		new baslik[512], string[1050];
 		format(baslik, sizeof(baslik), "{%s}(%s){fafafa}", GetFactionColor(playerid), olusumetiket(Birlikler[PlayerData[playerid][pFaction]][birlikTip]));
-		format(string, sizeof(string), "{%s}» {FFFFFF}İşbaşı\n{%s}» {FFFFFF}Üniformalar\n{%s}» {FFFFFF}Ekipmanlar\n{FF0000}» {FFFFFF}Silah Sıfırla", GetFactionColor(playerid), GetFactionColor(playerid), GetFactionColor(playerid));
+		format(string, sizeof(string), "{%s}» {FFFFFF}Isbasi\n{%s}» {FFFFFF}Uniformalar\n{%s}» {FFFFFF}Ekipmanlar\n{FF0000}» {FFFFFF}Silah Sifirla", GetFactionColor(playerid), GetFactionColor(playerid), GetFactionColor(playerid));
 		Dialog_Show(playerid, LSPDDolap, DIALOG_STYLE_LIST, baslik, string, "Onayla", "Kapat");
 	}
 	return 1;
@@ -453,5 +457,24 @@ CMD:dolap(playerid, params[])
 
 Dialog:LSPDDolap(playerid, response, listitem, inputtext[])
 {
+	if(response)
+	{
+		switch(listitem)
+		{
+			case 0:
+			{
+				if(PlayerData[playerid][pLSPDDuty] == 1)
+				{
+					PlayerData[playerid][pLSPDDuty] = 0;
+					Bilgi(playerid, "(%s) Isbasindan ciktiniz!", olusumetiket(GetFactionType(playerid)));
+				}
+				else
+				{
+					PlayerData[playerid][pLSPDDuty] = 1;
+					Bilgi(playerid, "(%s) Isbasi yaptiniz!", olusumetiket(GetFactionType(playerid)));
+				}
+			}
+		}
+	}
 	return 1;
 }
