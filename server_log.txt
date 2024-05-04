@@ -1,0 +1,427 @@
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[00:13:35] filterscripts = ""  (string)
+[00:13:35] 
+[00:13:35] Server Plugins
+[00:13:35] --------------
+[00:13:35]  Loading plugin: crashdetect
+[00:13:35]   CrashDetect plugin 4.19.4
+[00:13:35]   Loaded.
+[00:13:35]  Loading plugin: mysql
+[00:13:35]  >> plugin.mysql: R41-4 successfully loaded.
+[00:13:35]   Loaded.
+[00:13:35]  Loading plugin: streamer
+[00:13:35] 
+
+*** Streamer Plugin v2.9.2 by Incognito loaded ***
+
+[00:13:35]   Loaded.
+[00:13:35]  Loading plugin: sscanf
+[00:13:35] 
+
+[00:13:35]  ===============================
+
+[00:13:35]       sscanf plugin loaded.     
+
+[00:13:35]          Version:  2.8.2        
+
+[00:13:35]    (c) 2012 Alex "Y_Less" Cole  
+
+[00:13:35]  ===============================
+
+[00:13:35]   Loaded.
+[00:13:35]  Loading plugin: FCNPC-DL
+[00:13:35] 
+[00:13:35] -------------------------------------------------
+[00:13:35]      FCNPC - Fully Controllable NPC v2.0.0
+[00:13:35]             Windows SA-MP 0.3.7 R2
+[00:13:35]            Jan  2 2019 at 23:09:26
+[00:13:35] 
+[00:13:35]   Author:       OrMisicL (2013 - 2015)
+[00:13:35]   Continued by: ziggi    (2016 - present)
+[00:13:35] 
+[00:13:35]   See full credits in the README.md file
+[00:13:35] -------------------------------------------------
+[00:13:35] 
+[00:13:35] Loading...
+[00:13:35] Failed. (Use FCNPC for this version of the server (now you are using FCNPC-DL))
+[00:13:35]   Failed.
+[00:13:35]  Loading plugin: SKY
+[00:13:35] Error: Unknown Windows server version (0048c8d0)
+
+[00:13:35]   Loaded.
+[00:13:35]  Loading plugin: pawn-memory
+[00:13:35] ========================
+[00:13:35] = Memory access plugin =
+[00:13:35] =       Made by BigETI =
+[00:13:35] = Loaded!              =
+[00:13:35] ========================
+[00:13:35]   Loaded.
+[00:13:35]  Loading plugin: pawnraknet
+[00:13:35] [Pawn.RakNet] 
+
+    | Pawn.RakNet 1.4.1 | 2016 - 2020
+    |--------------------------------
+    | Author and maintainer: urShadow
+
+
+    | Compiled: Jun 18 2020 at 14:19:11
+    |--------------------------------------------------------------
+    | Forum thread: https://forum.sa-mp.com/showthread.php?t=640306
+    |--------------------------------------------------------------
+    | Repository: https://github.com/urShadow/Pawn.RakNet
+    |--------------------------------------------------------------
+    | Wiki: https://github.com/urShadow/Pawn.RakNet/wiki
+
+[00:13:35]   Loaded.
+[00:13:35]  Loading plugin: discord-connector
+[00:13:56]  >> plugin.dc-connector: timeout while initializing data.
+[00:13:56]                          plugin will proceed to retry connecting in the background.
+[00:13:56]   Loaded.
+[00:13:56]  Loaded 8 plugins.
+
+[00:13:56] 
+[00:13:56] Filterscripts
+[00:13:56] ---------------
+[00:13:56]   Loaded 0 filterscripts.
+
+[00:13:56] [MySQL]: Veritabani baglantisi kuruluyor...
+[00:13:56] [MySQL]: Veritabani baglantisi basarili!
+[00:13:56] 
+----------------------------------
+[00:13:56] [DEVELOPER]: Abusivesnake
+[00:13:56] ----------------------------------
+
+[00:13:56] Number of vehicle models: 0
+[00:14:42] [connection] incoming connection: 127.0.0.1:56113 id: 0
+[00:14:57] [connection] incoming connection: 127.0.0.1:57906 id: 0
+[00:15:12] [connection] incoming connection: 127.0.0.1:59887 id: 0
+[00:15:22] [connection] incoming connection: 127.0.0.1:56182 id: 0
+[00:15:23] [connection] incoming connection: 127.0.0.1:56183 id: 0
+[00:15:23] [join] Javier_Taylor has joined the server (0:127.0.0.1)
+[00:15:52] RCON (In-Game): Player #0 (Javier_Taylor) has logged in.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[00:18:28] filterscripts = ""  (string)
+[00:18:28] 
+[00:18:28] Server Plugins
+[00:18:28] --------------
+[00:18:28]  Loading plugin: crashdetect
+[00:18:28]   CrashDetect plugin 4.19.4
+[00:18:28]   Loaded.
+[00:18:28]  Loading plugin: mysql
+[00:18:28]  >> plugin.mysql: R41-4 successfully loaded.
+[00:18:28]   Loaded.
+[00:18:28]  Loading plugin: streamer
+[00:18:28] 
+
+*** Streamer Plugin v2.9.2 by Incognito loaded ***
+
+[00:18:28]   Loaded.
+[00:18:28]  Loading plugin: sscanf
+[00:18:28] 
+
+[00:18:28]  ===============================
+
+[00:18:28]       sscanf plugin loaded.     
+
+[00:18:28]          Version:  2.8.2        
+
+[00:18:28]    (c) 2012 Alex "Y_Less" Cole  
+
+[00:18:28]  ===============================
+
+[00:18:28]   Loaded.
+[00:18:28]  Loading plugin: FCNPC-DL
+[00:18:28] 
+[00:18:28] -------------------------------------------------
+[00:18:28]      FCNPC - Fully Controllable NPC v2.0.0
+[00:18:28]             Windows SA-MP 0.3.7 R2
+[00:18:28]            Jan  2 2019 at 23:09:26
+[00:18:28] 
+[00:18:28]   Author:       OrMisicL (2013 - 2015)
+[00:18:28]   Continued by: ziggi    (2016 - present)
+[00:18:28] 
+[00:18:28]   See full credits in the README.md file
+[00:18:28] -------------------------------------------------
+[00:18:28] 
+[00:18:28] Loading...
+[00:18:28] Failed. (Use FCNPC for this version of the server (now you are using FCNPC-DL))
+[00:18:28]   Failed.
+[00:18:28]  Loading plugin: SKY
+[00:18:28] Error: Unknown Windows server version (0048c8d0)
+
+[00:18:28]   Loaded.
+[00:18:28]  Loading plugin: pawn-memory
+[00:18:28] ========================
+[00:18:28] = Memory access plugin =
+[00:18:28] =       Made by BigETI =
+[00:18:28] = Loaded!              =
+[00:18:28] ========================
+[00:18:28]   Loaded.
+[00:18:28]  Loading plugin: pawnraknet
+[00:18:28] [Pawn.RakNet] 
+
+    | Pawn.RakNet 1.4.1 | 2016 - 2020
+    |--------------------------------
+    | Author and maintainer: urShadow
+
+
+    | Compiled: Jun 18 2020 at 14:19:11
+    |--------------------------------------------------------------
+    | Forum thread: https://forum.sa-mp.com/showthread.php?t=640306
+    |--------------------------------------------------------------
+    | Repository: https://github.com/urShadow/Pawn.RakNet
+    |--------------------------------------------------------------
+    | Wiki: https://github.com/urShadow/Pawn.RakNet/wiki
+
+[00:18:28]   Loaded.
+[00:18:28]  Loading plugin: discord-connector
+[00:18:49]  >> plugin.dc-connector: timeout while initializing data.
+[00:18:49]                          plugin will proceed to retry connecting in the background.
+[00:18:49]   Loaded.
+[00:18:49]  Loaded 8 plugins.
+
+[00:18:49] 
+[00:18:49] Filterscripts
+[00:18:49] ---------------
+[00:18:49]   Loaded 0 filterscripts.
+
+[00:18:49] [MySQL]: Veritabani baglantisi kuruluyor...
+[00:18:49] [MySQL]: Veritabani baglantisi basarili!
+[00:18:49] 
+----------------------------------
+[00:18:49] [DEVELOPER]: Abusivesnake
+[00:18:49] ----------------------------------
+
+[00:18:49] Number of vehicle models: 0
+[00:18:50] [connection] incoming connection: 127.0.0.1:57678 id: 0
+[00:18:50] [join] Javier_Taylor has joined the server (0:127.0.0.1)
+[00:19:02] RCON (In-Game): Player #0 (Javier_Taylor) has logged in.
+[00:20:47] RCON (In-Game): Player [Javier_Taylor] sent command: gmx
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[00:21:56] filterscripts = ""  (string)
+[00:21:56] 
+[00:21:56] Server Plugins
+[00:21:56] --------------
+[00:21:56]  Loading plugin: crashdetect
+[00:21:56]   CrashDetect plugin 4.19.4
+[00:21:56]   Loaded.
+[00:21:56]  Loading plugin: mysql
+[00:21:56]  >> plugin.mysql: R41-4 successfully loaded.
+[00:21:56]   Loaded.
+[00:21:56]  Loading plugin: streamer
+[00:21:56] 
+
+*** Streamer Plugin v2.9.2 by Incognito loaded ***
+
+[00:21:56]   Loaded.
+[00:21:56]  Loading plugin: sscanf
+[00:21:56] 
+
+[00:21:56]  ===============================
+
+[00:21:56]       sscanf plugin loaded.     
+
+[00:21:56]          Version:  2.8.2        
+
+[00:21:56]    (c) 2012 Alex "Y_Less" Cole  
+
+[00:21:56]  ===============================
+
+[00:21:56]   Loaded.
+[00:21:56]  Loading plugin: FCNPC-DL
+[00:21:57] 
+[00:21:57] -------------------------------------------------
+[00:21:57]      FCNPC - Fully Controllable NPC v2.0.0
+[00:21:57]             Windows SA-MP 0.3.7 R2
+[00:21:57]            Jan  2 2019 at 23:09:26
+[00:21:57] 
+[00:21:57]   Author:       OrMisicL (2013 - 2015)
+[00:21:57]   Continued by: ziggi    (2016 - present)
+[00:21:57] 
+[00:21:57]   See full credits in the README.md file
+[00:21:57] -------------------------------------------------
+[00:21:57] 
+[00:21:57] Loading...
+[00:21:57] Failed. (Use FCNPC for this version of the server (now you are using FCNPC-DL))
+[00:21:57]   Failed.
+[00:21:57]  Loading plugin: SKY
+[00:21:57] Error: Unknown Windows server version (0048c8d0)
+
+[00:21:57]   Loaded.
+[00:21:57]  Loading plugin: pawn-memory
+[00:21:57] ========================
+[00:21:57] = Memory access plugin =
+[00:21:57] =       Made by BigETI =
+[00:21:57] = Loaded!              =
+[00:21:57] ========================
+[00:21:57]   Loaded.
+[00:21:57]  Loading plugin: pawnraknet
+[00:21:57] [Pawn.RakNet] 
+
+    | Pawn.RakNet 1.4.1 | 2016 - 2020
+    |--------------------------------
+    | Author and maintainer: urShadow
+
+
+    | Compiled: Jun 18 2020 at 14:19:11
+    |--------------------------------------------------------------
+    | Forum thread: https://forum.sa-mp.com/showthread.php?t=640306
+    |--------------------------------------------------------------
+    | Repository: https://github.com/urShadow/Pawn.RakNet
+    |--------------------------------------------------------------
+    | Wiki: https://github.com/urShadow/Pawn.RakNet/wiki
+
+[00:21:57]   Loaded.
+[00:21:57]  Loading plugin: discord-connector
+[00:22:18]  >> plugin.dc-connector: timeout while initializing data.
+[00:22:18]                          plugin will proceed to retry connecting in the background.
+[00:22:18]   Loaded.
+[00:22:18]  Loaded 8 plugins.
+
+[00:22:18] 
+[00:22:18] Filterscripts
+[00:22:18] ---------------
+[00:22:18]   Loaded 0 filterscripts.
+
+[00:22:18] [MySQL]: Veritabani baglantisi kuruluyor...
+[00:22:18] [MySQL]: Veritabani baglantisi basarili!
+[00:22:18] 
+----------------------------------
+[00:22:18] [DEVELOPER]: Abusivesnake
+[00:22:18] ----------------------------------
+
+[00:22:18] Number of vehicle models: 0
+[00:22:30] [connection] incoming connection: 127.0.0.1:52282 id: 0
+[00:22:31] [connection] incoming connection: 127.0.0.1:52283 id: 0
+[00:22:31] [join] Javier_Taylor has joined the server (0:127.0.0.1)
+[00:22:38] RCON (In-Game): Player #0 (Javier_Taylor) has logged in.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[00:24:13] filterscripts = ""  (string)
+[00:24:13] 
+[00:24:13] Server Plugins
+[00:24:13] --------------
+[00:24:13]  Loading plugin: crashdetect
+[00:24:13]   CrashDetect plugin 4.19.4
+[00:24:13]   Loaded.
+[00:24:13]  Loading plugin: mysql
+[00:24:13]  >> plugin.mysql: R41-4 successfully loaded.
+[00:24:13]   Loaded.
+[00:24:13]  Loading plugin: streamer
+[00:24:13] 
+
+*** Streamer Plugin v2.9.2 by Incognito loaded ***
+
+[00:24:13]   Loaded.
+[00:24:13]  Loading plugin: sscanf
+[00:24:13] 
+
+[00:24:13]  ===============================
+
+[00:24:13]       sscanf plugin loaded.     
+
+[00:24:13]          Version:  2.8.2        
+
+[00:24:13]    (c) 2012 Alex "Y_Less" Cole  
+
+[00:24:13]  ===============================
+
+[00:24:13]   Loaded.
+[00:24:13]  Loading plugin: FCNPC-DL
+[00:24:13] 
+[00:24:13] -------------------------------------------------
+[00:24:13]      FCNPC - Fully Controllable NPC v2.0.0
+[00:24:13]             Windows SA-MP 0.3.7 R2
+[00:24:13]            Jan  2 2019 at 23:09:26
+[00:24:13] 
+[00:24:13]   Author:       OrMisicL (2013 - 2015)
+[00:24:13]   Continued by: ziggi    (2016 - present)
+[00:24:13] 
+[00:24:13]   See full credits in the README.md file
+[00:24:13] -------------------------------------------------
+[00:24:13] 
+[00:24:13] Loading...
+[00:24:13] Failed. (Use FCNPC for this version of the server (now you are using FCNPC-DL))
+[00:24:13]   Failed.
+[00:24:13]  Loading plugin: SKY
+[00:24:13] Error: Unknown Windows server version (0048c8d0)
+
+[00:24:13]   Loaded.
+[00:24:13]  Loading plugin: pawn-memory
+[00:24:13] ========================
+[00:24:13] = Memory access plugin =
+[00:24:13] =       Made by BigETI =
+[00:24:13] = Loaded!              =
+[00:24:13] ========================
+[00:24:13]   Loaded.
+[00:24:13]  Loading plugin: pawnraknet
+[00:24:13] [Pawn.RakNet] 
+
+    | Pawn.RakNet 1.4.1 | 2016 - 2020
+    |--------------------------------
+    | Author and maintainer: urShadow
+
+
+    | Compiled: Jun 18 2020 at 14:19:11
+    |--------------------------------------------------------------
+    | Forum thread: https://forum.sa-mp.com/showthread.php?t=640306
+    |--------------------------------------------------------------
+    | Repository: https://github.com/urShadow/Pawn.RakNet
+    |--------------------------------------------------------------
+    | Wiki: https://github.com/urShadow/Pawn.RakNet/wiki
+
+[00:24:13]   Loaded.
+[00:24:13]  Loading plugin: discord-connector
+[00:24:34]  >> plugin.dc-connector: timeout while initializing data.
+[00:24:34]                          plugin will proceed to retry connecting in the background.
+[00:24:34]   Loaded.
+[00:24:34]  Loaded 8 plugins.
+
+[00:24:34] 
+[00:24:34] Filterscripts
+[00:24:34] ---------------
+[00:24:34]   Loaded 0 filterscripts.
+
+[00:24:34] [MySQL]: Veritabani baglantisi kuruluyor...
+[00:24:34] [MySQL]: Veritabani baglantisi basarili!
+[00:24:34] 
+----------------------------------
+[00:24:34] [DEVELOPER]: Abusivesnake
+[00:24:34] ----------------------------------
+
+[00:24:34] Number of vehicle models: 0
+[00:24:36] [connection] incoming connection: 127.0.0.1:57056 id: 0
+[00:24:36] [join] Javier_Taylor has joined the server (0:127.0.0.1)
+[00:24:56] RCON (In-Game): Player #0 (Javier_Taylor) has logged in.
+[00:39:15] RCON (In-Game): Player [Javier_Taylor] sent command: gmx

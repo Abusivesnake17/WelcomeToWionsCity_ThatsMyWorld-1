@@ -32,6 +32,9 @@
 #include <discord-connector>
 #include <discord-cmd>
 #include <foreach>
+#include <streamer>
+#include <YSI\y_iterate>
+#include <renkler>
 
 #define SQL_HOST "localhost"
 #define SQL_USER "root"
@@ -40,6 +43,7 @@
 
 #define function%0(%1) forward%0(%1); public%0(%1)
 
+#define MAX_BIRLIK 100 // Maksimum oluşturulabilecek birlik sayısıdır.
 #define MAX_BIRLIK 100 // Maksimum oluşturulabilecek birlik sayısıdır.
 
 #define BIRLIK_CETE      (1)
@@ -61,6 +65,9 @@
 #define Kullanim(%0,%1)    \
 	SendClientMessageEx(%0, -1, "{5762FF}[W:RP]: {fafafa}"%1)
 
+#define Uyari(%0,%1)    \
+	SendClientMessageEx(%0, -1, "{FF9900}[UYARI]: {fafafa}"%1)
+
 new MySQL:mysqlC;
 
 enum pData
@@ -79,7 +86,9 @@ enum pData
 	pMask,
 	pMaskID,
 	pFaction,
-	pLSPDDuty
+	pLSPDDuty,
+	pFactionRutbe,
+	pFactionDivizyon
 };
 
 new PlayerData[MAX_PLAYERS][pData];
@@ -109,7 +118,7 @@ enum BirlikData
 	Float:reklamPos[3],
 	yayinNumara
 };
-
+new Iterator:CekilisKatilimcilar[MAX_BIRLIK]<300>;
 new Birlikler[MAX_BIRLIK][BirlikData];
 new BirlikRutbe[MAX_BIRLIK][15][32];
 new BirlikDivizyon[MAX_BIRLIK][5][20];
@@ -147,6 +156,12 @@ public OnGameModeInit()
 	cikislog = DCC_FindChannelById("1123344851417710715");
 	AntiDeAMX();
 	WasteDeAMXersTime();
+    DisableInteriorEnterExits();
+    EnableStuntBonusForAll(0);
+    ShowNameTags(1);
+    SetNameTagDrawDistance(45.0);
+    ShowPlayerMarkers(PLAYER_MARKERS_MODE_OFF);
+    ManualVehicleEngineAndLights();
 	DCC_SetBotPresenceStatus(3);
 	DCSayim();
 	SetGameModeText("W:RP - v1.0.0");
@@ -161,6 +176,8 @@ public OnGameModeInit()
 	{
 		printf("[MySQL]: Veritabani baglantisi basarisiz!");
 	}
+	CreateDynamicPickup(1239, 23, 261.8779, 109.7122, 1004.6172, -1, 10);
+	CreateDynamic3DTextLabel("{1394BF}LSPD Dolap\n{fafafa}/dolap ile acabilirsiniz.", -1, 261.8779, 109.7122, 1004.6172, 5.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, -1, 10);
 	return 1;
 }
 
@@ -391,6 +408,90 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 }
 
 //  --  [STOCKLAR]  --  //
+
+stock Birlik_Olustur(birlikisim[],tip)
+{
+    for (new i = 0; i != MAX_BIRLIK; i ++) if (!Birlikler[i][birlikExists])
+    {
+        Birlikler[i][birlikExists] = true;
+        format(Birlikler[i][birlikAd],32,birlikisim);
+        Birlikler[i][birlikDuyuru][0] = '\0';
+        if(tip != 3) Birlikler[i][birlikColor] = 0xFFFFFF00;
+        else Birlikler[i][birlikColor] = 0x9ACD32FF;
+        Birlikler[i][birlikTip] = tip;
+        switch(tip)
+        {
+            case 1..4: Birlikler[i][birlikRutbeler] = 6;
+            default: Birlikler[i][birlikRutbeler] = 12;
+        }
+        Birlikler[i][birlikKasaPara] = 0;
+        Birlikler[i][birlikOnaylar][0] = 0;
+        Birlikler[i][birlikOnaylar][1] = 0;
+        Birlikler[i][birlikOnaylar][2] = 0;
+        Birlikler[i][birlikOnaylar][3] = 0;
+        Birlikler[i][birlikOnaylar][4] = 0;
+        Birlikler[i][OOCDurum] = 1;
+        Birlikler[i][birlikYetkilendirme][0] = Birlikler[i][birlikRutbeler]-1; // Üye Alma
+        Birlikler[i][birlikYetkilendirme][1] = Birlikler[i][birlikRutbeler]-1; // Üye Atma
+        Birlikler[i][birlikYetkilendirme][2] = Birlikler[i][birlikRutbeler]-2; // Rütbe Değiştirme
+        Birlikler[i][birlikYetkilendirme][3] = Birlikler[i][birlikRutbeler]-2; // Divizyon Değiştirme
+        Birlikler[i][birlikYetkilendirme][4] = Birlikler[i][birlikRutbeler]-3; // Araçları Spawnlama
+        Birlikler[i][birlikYetkilendirme][5] = Birlikler[i][birlikRutbeler]-3; // Birlik OOC Chat Kapatma
+        Birlikler[i][birlikYetkilendirme][6] = Birlikler[i][birlikRutbeler]; // Birlik Kasasından Para Alma
+        Birlikler[i][birlikYetkilendirme][7] = 1; // Ajans Ayarları Seviyesi
+        Birlikler[i][yayinDurum] = 1;
+        Birlikler[i][yayinTipi] = 0;
+        Birlikler[i][ReklamAlimi] = 0;
+        Birlikler[i][ReklamUcreti] = 0;
+        Birlikler[i][ReklamSayisi] = 0;
+        Birlikler[i][CekilisBasladi] = false;
+        Birlikler[i][cekilisOdul] = 0;
+        Birlikler[i][reklamPos][0] = 0.0;
+        Birlikler[i][reklamPos][1] = 0.0;
+        Birlikler[i][reklamPos][2] = 0.0;
+        if(IsValidDynamicPickup(Birlikler[i][reklamPickup])) DestroyDynamicPickup(Birlikler[i][reklamPickup]);
+        if(IsValidDynamic3DTextLabel(Birlikler[i][reklamLabel])) DestroyDynamic3DTextLabel(Birlikler[i][reklamLabel]);
+        for (new j = 0; j < 15; j ++)
+        {
+            if(j < 5)
+            {
+                format(BirlikDivizyon[i][j],20,"Birim %d",j+1);
+            }
+            format(BirlikRutbe[i][j],32,"Rutbe %d",j+1);
+        }
+        mysql_tquery(mysqlC, "INSERT INTO `birlikler` (`bRutbeler`) VALUES(10)", "OnFactionCreated", "d", i);
+        return i;
+    }
+    return -1;
+}
+
+stock Birlik_Sil(factionid)
+{
+	if(factionid != -1 && Birlikler[factionid][birlikExists])
+	{
+	    new string[150];
+		format(string, sizeof(string), "DELETE FROM `birlikler` WHERE `bid` = '%d'",Birlikler[factionid][birlikID]);
+		mysql_query(mysqlC, string, false);
+		format(string, sizeof(string), "UPDATE `oyuncular` SET `Birlik` = '-1',`BirlikRutbe` = '0',`BirlikDivizyon` = '0' WHERE `Birlik` = '%d'", factionid);
+		mysql_query(mysqlC, string, false);
+ 		foreach (new i : Player)
+		{
+			if(PlayerData[i][pFaction] == factionid) 
+			{
+		    	PlayerData[i][pFaction] = -1;
+		    	PlayerData[i][pFactionRutbe] = 0;
+		    	PlayerData[i][pFactionDivizyon] = 0;
+			}
+		}
+        if(IsValidDynamicPickup(Birlikler[factionid][reklamPickup])) DestroyDynamicPickup(Birlikler[factionid][reklamPickup]);
+        if(IsValidDynamic3DTextLabel(Birlikler[factionid][reklamLabel])) DestroyDynamic3DTextLabel(Birlikler[factionid][reklamLabel]);
+	    Birlikler[factionid][birlikExists] = false;
+	    Birlikler[factionid][birlikTip] = 0;
+	    Birlikler[factionid][birlikID] = 0;
+	    Iter_Clear(CekilisKatilimcilar[factionid]);
+	}
+	return 1;
+}
 
 stock GetIP(playerid)
 {
@@ -691,10 +792,10 @@ CMD:dolap(playerid, params[])
 {
 	if(GetFactionType(playerid) == BIRLIK_LSPD)
 	{
-		if(!IsPlayerInRangeOfPoint(playerid, 5.0, -1605.508666, 711.299377, 13.867187)) return Hata(playerid, "Dolaba yeterince yakın değilsiniz!");
+		if(!IsPlayerInRangeOfPoint(playerid, 5.0, 261.8779, 109.7122, 1004.6172)) return Hata(playerid, "Dolaba yeterince yakın değilsiniz!");
 		new baslik[512], string[1050];
 		format(baslik, sizeof(baslik), "{%s}(%s){fafafa}", GetFactionColor(playerid), olusumetiket(Birlikler[PlayerData[playerid][pFaction]][birlikTip]));
-		format(string, sizeof(string), "{%s}» {FFFFFF}İşbaşı\n{%s}» {FFFFFF}Üniformalar\n{%s}» {FFFFFF}Ekipmanlar\n{FF0000}» {FFFFFF}Silah Sıfırla", GetFactionColor(playerid), GetFactionColor(playerid), GetFactionColor(playerid));
+		format(string, sizeof(string), "{%s}» {FFFFFF}Isbasi\n{%s}» {FFFFFF}Uniformalar\n{%s}» {FFFFFF}Ekipmanlar\n{FF0000}» {FFFFFF}Silah Sifirla", GetFactionColor(playerid), GetFactionColor(playerid), GetFactionColor(playerid));
 		Dialog_Show(playerid, LSPDDolap, DIALOG_STYLE_LIST, baslik, string, "Onayla", "Kapat");
 	}
 	return 1;
@@ -724,7 +825,7 @@ Dialog:LSPDDolap(playerid, response, listitem, inputtext[])
 	return 1;
 }
 
-stock YetkinizYok(playerid) return Hata(playerid, "Bu komutu kullanabilmek için yeterli yetkiniz yok!");
+stock YetkinizYok(playerid) return Hata(playerid, "Bu komutu kullanabilmek icin yeterli yetkiniz yok!");
 
 CMD:gotopos(playerid,params[])
 {
@@ -733,5 +834,33 @@ CMD:gotopos(playerid,params[])
 	if(sscanf(params,"ifff", intid, pos[0], pos[1], pos[2])) return Kullanim(playerid,"/gotopos [INT ID] [X] [Y] [Z]");
 	SetPlayerInterior(playerid, intid);
 	SetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+	return 1;
+}
+
+CMD:birlikolustur(playerid,params[])
+{
+	new id = -1,type,name[32],str[50], lid;
+	if(PlayerData[playerid][pAdmin] < 4) return YetkinizYok(playerid);
+	if(sscanf(params, "ds[32]", type, name))
+	{
+	    Kullanim(playerid,"/birlikolustur [Tip] [Isim]");
+     	SendClientMessage(playerid, COLOR_YELLOW, "[TİP]:{FFFFFF}1: Cete 2: Mafya 3: Yayın Ajansi 4: Legal 5: LSPD 6: LSFMD 7: FBI 8: GOV 9: Mekanik");
+   		return 1;
+	}
+	if(type < 1 || type > 9) return Hata(playerid,"Tip 1 ile 9 arasinda olmalidir!");
+	id = Birlik_Olustur(name, type);
+	if(id == -1) return Hata(playerid,"Sunucu maksimum birlik sayisina ulasmistir!");
+	Bilgi(playerid,"Birlik olusturuldu, ID: %d",id);
+	return 1;
+}
+
+CMD:birliksil(playerid, params[])
+{
+	static id = 0;
+    if(PlayerData[playerid][pAdmin] < 4) return YetkinizYok(playerid);
+	if(sscanf(params, "d", id)) return Kullanim(playerid, "/birliksil [Birlik ID]");
+	if((id < 0 || id >= MAX_BIRLIK) || !Birlikler[id][birlikExists]) return Hata(playerid, "Gecersiz ID!");
+	Birlik_Sil(id);
+	Uyari(playerid, "Birlik ID %d silindi.", id);
 	return 1;
 }
