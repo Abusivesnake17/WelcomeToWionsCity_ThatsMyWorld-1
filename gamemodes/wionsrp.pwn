@@ -1136,3 +1136,16 @@ CMD:setleader(playerid, params[])
     }
     return 1;
 }
+
+CMD:setskin(playerid, params[])
+{
+    static userid,skinid;
+    if(!IsPlayerAdmin(playerid)) return YetkinizYok(playerid);
+    if(sscanf(params, "ud", userid, skinid)) return Kullanim(playerid, "/setskin [ID/Isim] [Skin ID]");
+    if(!OyundaDegil(userid)) return Hata(playerid, "Belirttiginiz oyuncu oyunda degil!");
+    SetPlayerSkin(userid, skinid);
+    PlayerData[userid][pSkin] = skinid;
+    Bilgi(playerid, "%s adli oyuncunun kiyafetini ID %d olarak degistirdiniz.", ReturnName(userid, 0), skinid);
+    Uyari(userid, "%s adli yetkili skininizi ID %d olarak degistirdi.", PlayerData[playerid][pAdminName], skinid);
+    return 1;
+}
