@@ -54,7 +54,10 @@
 	SendClientMessageEx(%0, -1, "{FF0000}[HATA]: {fafafa}"%1)
 
 #define Bilgi(%0,%1)    \
-	SendClientMessageEx(%0, -1, "{33CC33}[BILGI]: {fafafa}")
+	SendClientMessageEx(%0, -1, "{33CC33}[BILGI]: {fafafa}"%1)
+
+#define Kullanim(%0,%1)    \
+	SendClientMessageEx(%0, -1, "{5762FF}[W:RP]: {fafafa}"%1)
 
 new MySQL:mysqlC;
 
@@ -691,5 +694,17 @@ Dialog:LSPDDolap(playerid, response, listitem, inputtext[])
 			}
 		}
 	}
+	return 1;
+}
+
+stock YetkinizYok(playerid) return Hata(playerid, "Bu komutu kullanabilmek için yeterli yetkiniz yok!");
+
+CMD:gotopos(playerid,params[])
+{
+	new intid,Float:pos[3];
+	if(!IsPlayerAdmin(playerid)) return YetkinizYok(playerid);
+	if(sscanf(params,"ifff",intid,pos[0],pos[1],pos[2])) return Kullanim(playerid,"/gotopos [INT ID] [X] [Y] [Z]");
+	SetPlayerInterior(playerid,intid);
+	SetPlayerPos(playerid,pos[0],pos[1],pos[2]);
 	return 1;
 }
