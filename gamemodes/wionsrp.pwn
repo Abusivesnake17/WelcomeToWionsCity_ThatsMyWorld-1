@@ -703,8 +703,8 @@ CMD:gotopos(playerid,params[])
 {
 	new intid,Float:pos[3];
 	if(!IsPlayerAdmin(playerid)) return YetkinizYok(playerid);
-	if(sscanf(params,"ifff",intid,pos[0],pos[1],pos[2])) return Kullanim(playerid,"/gotopos [INT ID] [X] [Y] [Z]");
-	SetPlayerInterior(playerid,intid);
-	SetPlayerPos(playerid,pos[0],pos[1],pos[2]);
+	if(sscanf(params,"ifff", intid, pos[0], pos[1], pos[2])) return Kullanim(playerid,"/gotopos [INT ID] [X] [Y] [Z]");
+	SetPlayerInterior(playerid, intid);
+	SetPlayerPos(playerid, pos[0], pos[1], pos[2]);
 	return 1;
 }
