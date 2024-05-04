@@ -145,7 +145,6 @@ public OnGameModeInit()
 	DCC_SetBotPresenceStatus(3);
 	DCSayim();
 	SetGameModeText("W:RP - v1.0.0");
-	AddPlayerClass(0, 1958.3783, 1343.1572, 15.3746, 269.1425, 0, 0, 0, 0, 0, 0); // CJ
 	AddPlayerClass(1, 1958.3783, 1343.1572, 15.3746, 269.1425, 0, 0, 0, 0, 0, 0); // Truth
 	printf("[MySQL]: Veritabani baglantisi kuruluyor...");
 	mysqlC = mysql_connect(SQL_HOST, SQL_USER, SQL_PASS, SQL_DATA);
