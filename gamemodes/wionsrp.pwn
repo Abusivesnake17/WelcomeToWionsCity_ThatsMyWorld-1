@@ -29,6 +29,9 @@
 #include <izcmd>
 #include <sscanf2>
 #include <easyDialog>
+#include <discord-connector>
+#include <discord-cmd>
+#include <foreach>
 
 #define SQL_HOST "localhost"
 #define SQL_USER "root"
@@ -105,6 +108,26 @@ enum BirlikData
 new Birlikler[MAX_BIRLIK][BirlikData];
 new BirlikRutbe[MAX_BIRLIK][15][32];
 new BirlikDivizyon[MAX_BIRLIK][5][20];
+new oyuncusayisi = 0;
+new DCC_Channel: girislog;
+new DCC_Channel: cikislog;
+
+AntiDeAMX()
+{
+    new Abusivesnake[][] =
+    {
+        "Unarmed (Fist)",
+        "Brass K"
+    };
+    #pragma unused Abusivesnake
+}
+
+WasteDeAMXersTime()
+{
+    new Abusivesnake;
+    #emit load.pri Abusivesnake
+    #emit stor.pri Abusivesnake
+}
 
 main()
 {
@@ -115,6 +138,12 @@ main()
 
 public OnGameModeInit()
 {
+	girislog = DCC_FindChannelById("1123344851417710715");
+	cikislog = DCC_FindChannelById("1123344851417710715");
+	AntiDeAMX();
+	WasteDeAMXersTime();
+	DCC_SetBotPresenceStatus(3);
+	DCSayim();
 	SetGameModeText("W:RP - v1.0.0");
 	AddPlayerClass(0, 1958.3783, 1343.1572, 15.3746, 269.1425, 0, 0, 0, 0, 0, 0); // CJ
 	AddPlayerClass(1, 1958.3783, 1343.1572, 15.3746, 269.1425, 0, 0, 0, 0, 0, 0); // Truth
@@ -153,11 +182,29 @@ public OnPlayerConnect(playerid)
 		Kick(playerid);
 		return 1;
 	}
+	oyuncusayisi += 1;
+	DCSayim();
+	OyuncuGirisDC(playerid);
 	return 1;
 }
 
 public OnPlayerDisconnect(playerid, reason)
 {
+   	if(!IsPlayerNPC(playerid))
+   	{
+	   	new sebep[30];
+	   	switch(reason)
+	   	{
+			case 0: sebep = "baglantisi koptu";
+			case 1: sebep = "kendi istegiyle";
+			case 2: sebep = "kick/ban";
+			default: sebep = "Bilinmiyor";
+	   	}
+	   	SendNearbyMessage(playerid, 10.0, 0xAFAFAFFF, "%s sunucudan ayrildi. (%s)", ReturnName(playerid, 0), sebep);
+		oyuncusayisi -= 1;
+		DCSayim();
+		OyuncuCikisDC(playerid);
+   	}
 	return 1;
 }
 
@@ -322,6 +369,175 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 }
 
 //  --  [STOCKLAR]  --  //
+
+stock IsPlayerNearPlayer(playerid, targetid, Float:radius)
+{
+	static Float:fX, Float:fY, Float:fZ;
+	GetPlayerPos(targetid, fX, fY, fZ);
+	return (GetPlayerInterior(playerid) == GetPlayerInterior(targetid) && GetPlayerVirtualWorld(playerid) == GetPlayerVirtualWorld(targetid)) && IsPlayerInRangeOfPoint(playerid, radius, fX, fY, fZ);
+}
+
+stock SendNearbyMessage(playerid, Float:radius, color, const str[], {Float,_}:...)
+{
+	static args, start, end, string[144];
+	#emit LOAD.S.pri 8
+	#emit STOR.pri args
+	if(args > 16)
+	{
+		#emit ADDR.pri str
+		#emit STOR.pri start
+	    for(end = start + (args - 16); end > start; end -= 4)
+		{
+	        #emit LREF.pri end
+	        #emit PUSH.pri
+		}
+		#emit PUSH.S str
+		#emit PUSH.C 144
+		#emit PUSH.C string
+		#emit LOAD.S.pri 8
+		#emit CONST.alt 4
+		#emit SUB
+		#emit PUSH.pri
+		#emit SYSREQ.C format
+		#emit LCTRL 5
+		#emit SCTRL 4
+        foreach (new i : Player)
+		{
+			if(IsPlayerNearPlayer(i, playerid, radius)) 
+			{
+  				SendClientMessage(i, color, string);
+			}
+		}
+		return 1;
+	}
+ 	foreach (new i : Player)
+	{
+		if(IsPlayerNearPlayer(i, playerid, radius)) 
+		{
+			SendClientMessage(i, color, str);
+		}
+	}
+	return 1;
+}
+
+stock trcar(car[])
+{
+	new tmp[300];
+	set(tmp,car);
+	tmp=strreplace("ğ", "ÄŸ",tmp);
+	tmp=strreplace("|", "",tmp);
+	tmp=strreplace("Ğ", "ÄŸ",tmp);
+	tmp=strreplace("ş", "ÅŸ",tmp);
+	tmp=strreplace("Ş", "ÅŸ",tmp);
+	tmp=strreplace("ı", "Ä±",tmp);
+	tmp=strreplace("I", "I",tmp);
+	tmp=strreplace("İ", "Ä°",tmp);
+	tmp=strreplace("ö", "Ã¶",tmp);
+	tmp=strreplace("Ö", "Ã–",tmp);
+	tmp=strreplace("ç", "Ã§",tmp);
+	tmp=strreplace("Ç", "Ã‡",tmp);
+	tmp=strreplace("ü", "Ã¼",tmp);
+	tmp=strreplace("Ü", "Ãœ",tmp);
+	return tmp;
+}
+
+stock set(dest[],source[]) 
+{
+	new count = strlen(source);
+	new i=0;
+	for(i=0;i<count;i++) 
+	{
+		dest[i]=source[i];
+	}
+	dest[count]=0;
+}
+
+stock strreplace(trg[],newstr[],src[]) 
+{
+    new f=0;
+    new s1[256];
+    new tmp[256];
+    format(s1,sizeof(s1),"%s",src);
+    f = strfind(s1,trg);
+    tmp[0]=0;
+    while(f>=0) 
+	{
+        strcat(tmp,ret_memcpy(s1, 0, f));
+        strcat(tmp,newstr);
+        format(s1,sizeof(s1),"%s",ret_memcpy(s1, f+strlen(trg), strlen(s1)-f));
+        f = strfind(s1,trg);
+    }
+    strcat(tmp,s1);
+    return tmp;
+}
+
+ret_memcpy(source[],index=0,numbytes) 
+{
+	new tmp[256];
+	new i=0;
+	tmp[0]=0;
+	if(index>=strlen(source)) return tmp;
+	if(numbytes+index>=strlen(source)) numbytes=strlen(source)-index;
+	if(numbytes<=0) return tmp;
+	for(i=index;i<numbytes+index;i++) 
+	{
+		tmp[i-index]=source[i];
+		if (source[i]==0) return tmp;
+	}
+	tmp[numbytes]=0;
+	return tmp;
+}
+
+stock OyuncuCikisDC(playerid)
+{
+	static date[36];
+	getdate(date[2], date[1], date[0]);
+	gettime(date[3], date[4], date[5]);
+ 	new fark = 3;
+	new date3 = date[3]-fark;
+	if(date3 == -3) { date3 = 21, date[0]--; }
+	if(date3 == -2) { date3 = 22, date[0]--; }
+	if(date3 == -1) { date3 = 23, date[0]--; }
+	new DCC_Embed:embed = DCC_CreateEmbed(trcar("WionS Roleplay Oyuncu Cıkış Bilgileri"));
+	new paralogs[200];
+	format(paralogs, sizeof(paralogs), "%s adlı oyuncu sunucudan çıkış yaptı! ( %d / 200 )", ReturnName(playerid, 0), oyuncusayisi);
+	DCC_SetEmbedColor(embed, 16711680);
+	DCC_SetEmbedDescription(embed, trcar(paralogs));
+	format(date, sizeof(date), "%d-%02d-%02dT%02d:%02d:%02d.000Z", date[2], date[1], date[0], date3, date[4], date[5]);
+    DCC_SetEmbedTimestamp(embed, date);
+	DCC_SetEmbedImage(embed, "https://cdn.discordapp.com/attachments/1203403170965885019/1230586874788315279/WR1.png?ex=6633dc56&is=66216756&hm=ee31f1bba791ff9e4708331859aacaa8d17baf5d1630a1f8256670d60b9135ad&");
+	DCC_SetEmbedThumbnail(embed, "https://images-ext-1.discordapp.net/external/_GpMY4Vk4yugEWN369cmlJXhIKhRImM8hHX4GxfMOTI/https/cdn.discordapp.com/icons/1034900389440540702/a_e9e3585d09c2b0be77d780024027c8b2.gif?width=96&height=96");
+	DCC_SendChannelEmbedMessage(cikislog, embed);
+}
+
+stock OyuncuGirisDC(playerid)
+{
+	static date[36];
+	getdate(date[2], date[1], date[0]);
+	gettime(date[3], date[4], date[5]);
+ 	new fark = 3;
+	new date3 = date[3]-fark;
+	if(date3 == -3) { date3 = 21, date[0]--; }
+	if(date3 == -2) { date3 = 22, date[0]--; }
+	if(date3 == -1) { date3 = 23, date[0]--; }
+	new DCC_Embed:embed = DCC_CreateEmbed(trcar("WionS Roleplay Oyuncu Giriş Bilgileri"));
+	DCC_SetEmbedImage(embed, "https://cdn.discordapp.com/attachments/1203403170965885019/1230586874788315279/WR1.png?ex=6633dc56&is=66216756&hm=ee31f1bba791ff9e4708331859aacaa8d17baf5d1630a1f8256670d60b9135ad&");
+	new paralogs[200];
+	format(paralogs, sizeof(paralogs), "%s adlı oyuncu sunucuya giriş yaptı ( %d / 200 )", ReturnName(playerid, 0), oyuncusayisi);
+	DCC_SetEmbedColor(embed, 3066993);
+	DCC_SetEmbedDescription(embed, trcar(paralogs));
+	format(date, sizeof(date), "%d-%02d-%02dT%02d:%02d:%02d.000Z", date[2], date[1], date[0], date3, date[4], date[5]);
+    DCC_SetEmbedTimestamp(embed, date);
+	DCC_SetEmbedThumbnail(embed, "https://images-ext-1.discordapp.net/external/_GpMY4Vk4yugEWN369cmlJXhIKhRImM8hHX4GxfMOTI/https/cdn.discordapp.com/icons/1034900389440540702/a_e9e3585d09c2b0be77d780024027c8b2.gif?width=96&height=96");
+	DCC_SendChannelEmbedMessage(girislog, embed);
+}
+
+stock DCSayim()
+{
+    new string[32];
+ 	format(string, sizeof(string), "(%d/200) Oyuncu", oyuncusayisi);
+ 	DCC_SetBotActivity(string);
+}
 
 stock IsValidRoleplayName(const name[]) 
 {
