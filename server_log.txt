@@ -678,3 +678,104 @@ v0.3.7-R2, (C)2005-2015 SA-MP Team
 [00:40:53] [debug]  DCC_SetEmbedThumbnail
 [00:40:53] [debug]  DCC_SendChannelEmbedMessage
 [00:40:53] [debug]  DCC_SetBotActivity
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[00:42:49] filterscripts = ""  (string)
+[00:42:49] 
+[00:42:49] Server Plugins
+[00:42:49] --------------
+[00:42:49]  Loading plugin: crashdetect
+[00:42:49]   CrashDetect plugin 4.19.4
+[00:42:49]   Loaded.
+[00:42:49]  Loading plugin: mysql
+[00:42:49]  >> plugin.mysql: R41-4 successfully loaded.
+[00:42:49]   Loaded.
+[00:42:49]  Loading plugin: streamer
+[00:42:49] 
+
+*** Streamer Plugin v2.9.2 by Incognito loaded ***
+
+[00:42:49]   Loaded.
+[00:42:49]  Loading plugin: sscanf
+[00:42:49] 
+
+[00:42:49]  ===============================
+
+[00:42:49]       sscanf plugin loaded.     
+
+[00:42:49]          Version:  2.8.2        
+
+[00:42:49]    (c) 2012 Alex "Y_Less" Cole  
+
+[00:42:49]  ===============================
+
+[00:42:49]   Loaded.
+[00:42:49]  Loading plugin: FCNPC-DL
+[00:42:49] 
+[00:42:49] -------------------------------------------------
+[00:42:49]      FCNPC - Fully Controllable NPC v2.0.0
+[00:42:49]             Windows SA-MP 0.3.7 R2
+[00:42:49]            Jan  2 2019 at 23:09:26
+[00:42:49] 
+[00:42:49]   Author:       OrMisicL (2013 - 2015)
+[00:42:49]   Continued by: ziggi    (2016 - present)
+[00:42:49] 
+[00:42:49]   See full credits in the README.md file
+[00:42:49] -------------------------------------------------
+[00:42:49] 
+[00:42:49] Loading...
+[00:42:49] Failed. (Use FCNPC for this version of the server (now you are using FCNPC-DL))
+[00:42:49]   Failed.
+[00:42:49]  Loading plugin: SKY
+[00:42:49] Error: Unknown Windows server version (0048c8d0)
+
+[00:42:49]   Loaded.
+[00:42:49]  Loading plugin: pawn-memory
+[00:42:49] ========================
+[00:42:49] = Memory access plugin =
+[00:42:49] =       Made by BigETI =
+[00:42:49] = Loaded!              =
+[00:42:49] ========================
+[00:42:49]   Loaded.
+[00:42:49]  Loading plugin: pawnraknet
+[00:42:49] [Pawn.RakNet] 
+
+    | Pawn.RakNet 1.4.1 | 2016 - 2020
+    |--------------------------------
+    | Author and maintainer: urShadow
+
+
+    | Compiled: Jun 18 2020 at 14:19:11
+    |--------------------------------------------------------------
+    | Forum thread: https://forum.sa-mp.com/showthread.php?t=640306
+    |--------------------------------------------------------------
+    | Repository: https://github.com/urShadow/Pawn.RakNet
+    |--------------------------------------------------------------
+    | Wiki: https://github.com/urShadow/Pawn.RakNet/wiki
+
+[00:42:49]   Loaded.
+[00:42:49]  Loaded 7 plugins.
+
+[00:42:49] 
+[00:42:49] Filterscripts
+[00:42:49] ---------------
+[00:42:49]   Loaded 0 filterscripts.
+
+[00:42:49] [MySQL]: Veritabani baglantisi kuruluyor...
+[00:42:49] [MySQL]: Veritabani baglantisi basarili!
+[00:42:49] 
+----------------------------------
+[00:42:49] [DEVELOPER]: Abusivesnake
+[00:42:49] ----------------------------------
+
+[00:42:49] Number of vehicle models: 0
+[00:42:51] [connection] incoming connection: 127.0.0.1:57497 id: 0
+[00:42:51] [join] Javier_Taylor has joined the server (0:127.0.0.1)
+[00:43:00] RCON (In-Game): Player #0 (Javier_Taylor) has logged in.

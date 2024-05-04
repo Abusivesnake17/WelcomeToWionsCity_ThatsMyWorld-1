@@ -206,11 +206,11 @@ function OyuncuYukle(playerid)
 	cache_get_row_count(rows);
 	if(!rows)
 	{
-		Dialog_Show(playerid, Kayit, DIALOG_STYLE_INPUT, "{5762FF}WionS Roleplay - Kayit", "{fafafa}Sunucumuza hos geldiniz!\n\n{FF9900}Karakter Adi: {fafafa}%s\n\n{FF9900}IP Adresiniz: {fafafa}%s\n\n{fafafa}Kaydolmak icin sifrenizi giriniz: ", ReturnName(playerid, 0), GetIP(playerid));
+		Dialog_Show(playerid, Kayit, DIALOG_STYLE_INPUT, "{5762FF}WionS Roleplay - Kayit", "{fafafa}Sunucumuza hos geldiniz!\n\n{FF9900}Karakter Adi: {fafafa}%s\n\n{FF9900}IP Adresiniz: {fafafa}%s\n\n{fafafa}Kaydolmak icin sifrenizi giriniz: ", "Kaydol", "Cikis", ReturnName(playerid, 0), GetIP(playerid));
 	}
 	else
 	{
-		Dialog_Show(playerid, Giris, DIALOG_STYLE_PASSWORD, "{5762FF}WionS Roleplay - Giris", "{fafafa}Sunucumuza tekrardan hos geldiniz!\n\n{FF9900}Karakter Adi: {fafafa}%s\n\n{FF9900}IP Adresiniz: {fafafa}%s\n\n{fafafa}Giris yapmak icin sifrenizi giriniz: ", ReturnName(playerid, 0), GetIP(playerid));
+		Dialog_Show(playerid, Giris, DIALOG_STYLE_PASSWORD, "{5762FF}WionS Roleplay - Giris", "{fafafa}Sunucumuza tekrardan hos geldiniz!\n\n{FF9900}Karakter Adi: {fafafa}%s\n\n{FF9900}IP Adresiniz: {fafafa}%s\n\n{fafafa}Giris yapmak icin sifrenizi giriniz: ", "Giris", "Cikis", ReturnName(playerid, 0), GetIP(playerid));
 	}
 	return 1;
 }
