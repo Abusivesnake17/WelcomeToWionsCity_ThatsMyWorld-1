@@ -450,3 +450,8 @@ CMD:dolap(playerid, params[])
 	}
 	return 1;
 }
+
+Dialog:LSPDDolap(playerid, response, listitem, inputtext[])
+{
+	return 1;
+}
