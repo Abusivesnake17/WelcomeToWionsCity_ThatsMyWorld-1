@@ -38,6 +38,8 @@
 #define SQL_PASS ""
 #define SQL_DATA "ab_db"
 
+#define function%0(%1) forward%0(%1); public%0(%1)
+
 #define MAX_BIRLIK 100 // Maksimum oluşturulabilecek birlik sayısıdır.
 
 #define BIRLIK_CETE      (1)
@@ -177,6 +179,9 @@ public OnPlayerRequestClass(playerid, classid)
 
 public OnPlayerConnect(playerid)
 {
+	new query[128];
+	format(query, sizeof(query), "SELECT * FROM `oyuncular` WHERE Isim='%s'", ReturnName(playerid));
+	mysql_tquery(mysqlC, query, "OyuncuYukle", "d", playerid);
 	if(IsPlayerNPC(playerid)) return 1;
 	if(!IsValidRoleplayName(ReturnName(playerid)))
 	{
@@ -187,6 +192,17 @@ public OnPlayerConnect(playerid)
 	oyuncusayisi += 1;
 	DCSayim();
 	OyuncuGirisDC(playerid);
+	return 1;
+}
+
+function OyuncuYukle(playerid)
+{
+	new rows;
+	cache_get_row_count(rows);
+	if(!rows)
+	{
+		Dialog_Show(playerid, Kayit, DIALOG_STYLE_INPUT, "{5762FF}WionS Roleplay - Kayit", "{fafafa}Sunucumuza hos geldiniz!\n\n{FF9900}Karakter Adi: {fafafa}%s\n\n{FF9900}IP Adresiniz: {fafafa}%s\n\n{fafafa}Kaydolmak icin sifrenizi giriniz: ", ReturnName(playerid, 0), GetIP(playerid));
+	}
 	return 1;
 }
 
@@ -371,6 +387,13 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 }
 
 //  --  [STOCKLAR]  --  //
+
+stock GetIP(playerid)
+{
+	static ip[16];
+	GetPlayerIp(playerid, ip, sizeof(ip));
+	return ip;
+}
 
 stock IsPlayerNearPlayer(playerid, targetid, Float:radius)
 {
