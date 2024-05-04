@@ -425,3 +425,87 @@ v0.3.7-R2, (C)2005-2015 SA-MP Team
 [00:24:36] [join] Javier_Taylor has joined the server (0:127.0.0.1)
 [00:24:56] RCON (In-Game): Player #0 (Javier_Taylor) has logged in.
 [00:39:15] RCON (In-Game): Player [Javier_Taylor] sent command: gmx
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[00:40:21] filterscripts = ""  (string)
+[00:40:21] 
+[00:40:21] Server Plugins
+[00:40:21] --------------
+[00:40:21]  Loading plugin: crashdetect
+[00:40:21]   CrashDetect plugin 4.19.4
+[00:40:21]   Loaded.
+[00:40:21]  Loading plugin: mysql
+[00:40:21]  >> plugin.mysql: R41-4 successfully loaded.
+[00:40:21]   Loaded.
+[00:40:21]  Loading plugin: streamer
+[00:40:21] 
+
+*** Streamer Plugin v2.9.2 by Incognito loaded ***
+
+[00:40:21]   Loaded.
+[00:40:21]  Loading plugin: sscanf
+[00:40:21] 
+
+[00:40:21]  ===============================
+
+[00:40:21]       sscanf plugin loaded.     
+
+[00:40:21]          Version:  2.8.2        
+
+[00:40:21]    (c) 2012 Alex "Y_Less" Cole  
+
+[00:40:21]  ===============================
+
+[00:40:21]   Loaded.
+[00:40:21]  Loading plugin: FCNPC-DL
+[00:40:21] 
+[00:40:21] -------------------------------------------------
+[00:40:21]      FCNPC - Fully Controllable NPC v2.0.0
+[00:40:21]             Windows SA-MP 0.3.7 R2
+[00:40:21]            Jan  2 2019 at 23:09:26
+[00:40:21] 
+[00:40:21]   Author:       OrMisicL (2013 - 2015)
+[00:40:21]   Continued by: ziggi    (2016 - present)
+[00:40:21] 
+[00:40:21]   See full credits in the README.md file
+[00:40:21] -------------------------------------------------
+[00:40:21] 
+[00:40:21] Loading...
+[00:40:21] Failed. (Use FCNPC for this version of the server (now you are using FCNPC-DL))
+[00:40:21]   Failed.
+[00:40:21]  Loading plugin: SKY
+[00:40:21] Error: Unknown Windows server version (0048c8d0)
+
+[00:40:21]   Loaded.
+[00:40:21]  Loading plugin: pawn-memory
+[00:40:21] ========================
+[00:40:21] = Memory access plugin =
+[00:40:21] =       Made by BigETI =
+[00:40:21] = Loaded!              =
+[00:40:21] ========================
+[00:40:21]   Loaded.
+[00:40:21]  Loading plugin: pawnraknet
+[00:40:21] [Pawn.RakNet] 
+
+    | Pawn.RakNet 1.4.1 | 2016 - 2020
+    |--------------------------------
+    | Author and maintainer: urShadow
+
+
+    | Compiled: Jun 18 2020 at 14:19:11
+    |--------------------------------------------------------------
+    | Forum thread: https://forum.sa-mp.com/showthread.php?t=640306
+    |--------------------------------------------------------------
+    | Repository: https://github.com/urShadow/Pawn.RakNet
+    |--------------------------------------------------------------
+    | Wiki: https://github.com/urShadow/Pawn.RakNet/wiki
+
+[00:40:21]   Loaded.
+[00:40:21]  Loading plugin: discord-connector
