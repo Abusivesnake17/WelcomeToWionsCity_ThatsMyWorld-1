@@ -50,6 +50,9 @@
 #define Hata(%0,%1)    \
 	SendClientMessageEx(%0, -1, "{FF0000}[HATA]: {fafafa}"%1)
 
+#define Bilgi(%0,%1)    \
+	SendClientMessageEx(%0, -1, "{33CC33}[BILGI]: {fafafa}")
+
 new MySQL:mysqlC;
 
 enum pData
@@ -67,7 +70,8 @@ enum pData
 	pHelperName[24],
 	pMask,
 	pMaskID,
-	pFaction
+	pFaction,
+	pLSPDDuty
 };
 
 new PlayerData[MAX_PLAYERS][pData];
@@ -453,5 +457,24 @@ CMD:dolap(playerid, params[])
 
 Dialog:LSPDDolap(playerid, response, listitem, inputtext[])
 {
+	if(response)
+	{
+		switch(listitem)
+		{
+			case 0:
+			{
+				if(PlayerData[playerid][pLSPDDuty] == 1)
+				{
+					PlayerData[playerid][pLSPDDuty] = 0;
+					Bilgi(playerid, "(%s) Isbasindan ciktiniz!", olusumetiket(Birlikler[PlayerData[playerid][pFaction]][birlikTip]));
+				}
+				else
+				{
+					PlayerData[playerid][pLSPDDuty] = 1;
+					Bilgi(playerid, "(%s) Isbasina gectiniz!", olusumetiket(Birlikler[PlayerData[playerid][pFaction]][birlikTip]));
+				}
+			}
+		}
+	}
 	return 1;
 }
