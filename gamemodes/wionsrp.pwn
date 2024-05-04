@@ -182,7 +182,7 @@ public OnPlayerConnect(playerid)
 	new query[128];
 	format(query, sizeof(query), "SELECT * FROM `oyuncular` WHERE Isim='%s'", ReturnName(playerid));
 	mysql_tquery(mysqlC, query, "OyuncuYukle", "d", playerid);
-	if(IsPlayerNPC(playerid)) return 1;
+/*	if(IsPlayerNPC(playerid)) return 1;
 	if(!IsValidRoleplayName(ReturnName(playerid)))
 	{
 		Hata(playerid, "Isminiz roleplaye uygun degil! ( Ornek: Javier_Taylor )");
@@ -191,7 +191,7 @@ public OnPlayerConnect(playerid)
 	}
 	oyuncusayisi += 1;
 	DCSayim();
-	OyuncuGirisDC(playerid);
+	OyuncuGirisDC(playerid);*/
 	return 1;
 }
 
