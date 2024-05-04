@@ -29,8 +29,6 @@
 #include <izcmd>
 #include <sscanf2>
 #include <easyDialog>
-#include <discord-connector>
-#include <discord-cmd>
 #include <foreach>
 #include <streamer>
 #include <YSI\y_iterate>
@@ -122,9 +120,6 @@ new Iterator:CekilisKatilimcilar[MAX_BIRLIK]<300>;
 new Birlikler[MAX_BIRLIK][BirlikData];
 new BirlikRutbe[MAX_BIRLIK][15][32];
 new BirlikDivizyon[MAX_BIRLIK][5][20];
-new oyuncusayisi = 0;
-new DCC_Channel: girislog;
-new DCC_Channel: cikislog;
 
 AntiDeAMX()
 {
@@ -152,8 +147,6 @@ main()
 
 public OnGameModeInit()
 {
-	girislog = DCC_FindChannelById("1123344851417710715");
-	cikislog = DCC_FindChannelById("1123344851417710715");
 	AntiDeAMX();
 	WasteDeAMXersTime();
     DisableInteriorEnterExits();
@@ -162,8 +155,6 @@ public OnGameModeInit()
     SetNameTagDrawDistance(45.0);
     ShowPlayerMarkers(PLAYER_MARKERS_MODE_OFF);
     ManualVehicleEngineAndLights();
-	DCC_SetBotPresenceStatus(3);
-	DCSayim();
 	SetGameModeText("W:RP - v1.0.0");
 	AddPlayerClass(1, 1958.3783, 1343.1572, 15.3746, 269.1425, 0, 0, 0, 0, 0, 0); // Truth
 	printf("[MySQL]: Veritabani baglantisi kuruluyor...");
@@ -199,16 +190,13 @@ public OnPlayerConnect(playerid)
 	new query[128];
 	format(query, sizeof(query), "SELECT * FROM `oyuncular` WHERE Isim='%s'", ReturnName(playerid));
 	mysql_tquery(mysqlC, query, "OyuncuYukle", "d", playerid);
-/*	if(IsPlayerNPC(playerid)) return 1;
+	if(IsPlayerNPC(playerid)) return 1;
 	if(!IsValidRoleplayName(ReturnName(playerid)))
 	{
 		Hata(playerid, "Isminiz roleplaye uygun degil! ( Ornek: Javier_Taylor )");
 		Kick(playerid);
 		return 1;
 	}
-	oyuncusayisi += 1;
-	DCSayim();
-	OyuncuGirisDC(playerid);*/
 	return 1;
 }
 
@@ -240,9 +228,6 @@ public OnPlayerDisconnect(playerid, reason)
 			default: sebep = "Bilinmiyor";
 	   	}
 	   	SendNearbyMessage(playerid, 10.0, 0xAFAFAFFF, "%s sunucudan ayrildi. (%s)", ReturnName(playerid, 0), sebep);
-		oyuncusayisi -= 1;
-		DCSayim();
-		OyuncuCikisDC(playerid);
    	}
 	return 1;
 }
@@ -616,57 +601,6 @@ ret_memcpy(source[],index=0,numbytes)
 	}
 	tmp[numbytes]=0;
 	return tmp;
-}
-
-stock OyuncuCikisDC(playerid)
-{
-	static date[36];
-	getdate(date[2], date[1], date[0]);
-	gettime(date[3], date[4], date[5]);
- 	new fark = 3;
-	new date3 = date[3]-fark;
-	if(date3 == -3) { date3 = 21, date[0]--; }
-	if(date3 == -2) { date3 = 22, date[0]--; }
-	if(date3 == -1) { date3 = 23, date[0]--; }
-	new DCC_Embed:embed = DCC_CreateEmbed(trcar("WionS Roleplay Oyuncu Cıkış Bilgileri"));
-	new paralogs[200];
-	format(paralogs, sizeof(paralogs), "%s adlı oyuncu sunucudan çıkış yaptı! ( %d / 200 )", ReturnName(playerid, 0), oyuncusayisi);
-	DCC_SetEmbedColor(embed, 16711680);
-	DCC_SetEmbedDescription(embed, trcar(paralogs));
-	format(date, sizeof(date), "%d-%02d-%02dT%02d:%02d:%02d.000Z", date[2], date[1], date[0], date3, date[4], date[5]);
-    DCC_SetEmbedTimestamp(embed, date);
-	DCC_SetEmbedImage(embed, "https://cdn.discordapp.com/attachments/1203403170965885019/1230586874788315279/WR1.png?ex=6633dc56&is=66216756&hm=ee31f1bba791ff9e4708331859aacaa8d17baf5d1630a1f8256670d60b9135ad&");
-	DCC_SetEmbedThumbnail(embed, "https://images-ext-1.discordapp.net/external/_GpMY4Vk4yugEWN369cmlJXhIKhRImM8hHX4GxfMOTI/https/cdn.discordapp.com/icons/1034900389440540702/a_e9e3585d09c2b0be77d780024027c8b2.gif?width=96&height=96");
-	DCC_SendChannelEmbedMessage(cikislog, embed);
-}
-
-stock OyuncuGirisDC(playerid)
-{
-	static date[36];
-	getdate(date[2], date[1], date[0]);
-	gettime(date[3], date[4], date[5]);
- 	new fark = 3;
-	new date3 = date[3]-fark;
-	if(date3 == -3) { date3 = 21, date[0]--; }
-	if(date3 == -2) { date3 = 22, date[0]--; }
-	if(date3 == -1) { date3 = 23, date[0]--; }
-	new DCC_Embed:embed = DCC_CreateEmbed(trcar("WionS Roleplay Oyuncu Giriş Bilgileri"));
-	DCC_SetEmbedImage(embed, "https://cdn.discordapp.com/attachments/1203403170965885019/1230586874788315279/WR1.png?ex=6633dc56&is=66216756&hm=ee31f1bba791ff9e4708331859aacaa8d17baf5d1630a1f8256670d60b9135ad&");
-	new paralogs[200];
-	format(paralogs, sizeof(paralogs), "%s adlı oyuncu sunucuya giriş yaptı ( %d / 200 )", ReturnName(playerid, 0), oyuncusayisi);
-	DCC_SetEmbedColor(embed, 3066993);
-	DCC_SetEmbedDescription(embed, trcar(paralogs));
-	format(date, sizeof(date), "%d-%02d-%02dT%02d:%02d:%02d.000Z", date[2], date[1], date[0], date3, date[4], date[5]);
-    DCC_SetEmbedTimestamp(embed, date);
-	DCC_SetEmbedThumbnail(embed, "https://images-ext-1.discordapp.net/external/_GpMY4Vk4yugEWN369cmlJXhIKhRImM8hHX4GxfMOTI/https/cdn.discordapp.com/icons/1034900389440540702/a_e9e3585d09c2b0be77d780024027c8b2.gif?width=96&height=96");
-	DCC_SendChannelEmbedMessage(girislog, embed);
-}
-
-stock DCSayim()
-{
-    new string[32];
- 	format(string, sizeof(string), "(%d/200) Oyuncu", oyuncusayisi);
- 	DCC_SetBotActivity(string);
 }
 
 stock IsValidRoleplayName(const name[]) 
