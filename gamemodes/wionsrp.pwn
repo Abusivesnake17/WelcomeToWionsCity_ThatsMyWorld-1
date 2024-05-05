@@ -344,6 +344,22 @@ Dialog:Kayit(playerid, response, listitem, inputtext[])
 	return 1;
 }
 
+Dialog:Yas(playerid, response, listitem, inputtext[])
+{
+	if(response)
+	{
+		if(!IsNumeric(inputtext) || strval(inputtext) < 18 || strval(inputtext) > 100)
+		{
+			Hata(playerid, "%s adli karakterinizin yasi 18-100 arasinda olmalidir!", ReturnName(playerid, 0));
+			Dialog_Show(playerid, Yas, DIALOG_STYLE_INPUT, "{5762FF}Yasiniz: ", "{fafafa}%s adli karakterinizin yasini giriniz: ", "Devam", "Cikis", ReturnName(playerid, 0));
+			return 1;
+		}
+		PlayerData[playerid][pYas] = strval(inputtext);
+		Dialog_Show(playerid, Cinsiyet, DIALOG_STYLE_MSGBOX, "{5762FF}Cinsiyetiniz: ", "{fafafa}Cinsiyetinizi belirleyiniz: ", "Erkek", "Kadin");
+	}
+	return 1;
+}
+
 public OnPlayerDisconnect(playerid, reason)
 {
    	if(!IsPlayerNPC(playerid))
@@ -522,6 +538,19 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 }
 
 //  --  [STOCKLAR]  --  //
+
+IsNumeric(const str[])
+{
+	for (new i = 0, l = strlen(str); i != l; i ++)
+	{
+	    if (i == 0 && str[0] == '-')
+			continue;
+
+	    else if (str[i] < '0' || str[i] > '9')
+			return 0;
+	}
+	return 1;
+}
 
 stock OzelKarakter(yazi[])
 {
