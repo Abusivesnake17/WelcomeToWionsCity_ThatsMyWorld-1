@@ -313,6 +313,37 @@ function OyuncuYukle(playerid)
 	return 1;
 }
 
+Dialog:Kayit(playerid, response, listitem, inputtext[])
+{
+	if(response)
+	{
+		if(response)
+		{
+			if(strlen(inputtext) < 3 || strlen(inputtext) > 24)
+			{
+				Hata(playerid, "Sifreniz 3 haneden kisa veya 24 haneden uzun olamaz!");
+				Dialog_Show(playerid, Kayit, DIALOG_STYLE_INPUT, "{5762FF}WionS Roleplay - Kayit", "{fafafa}Sunucumuza hos geldiniz!\n\n{FF9900}Karakter Adi: {fafafa}%s\n\n{FF9900}IP Adresiniz: {fafafa}%s\n\n{fafafa}Kaydolmak icin sifrenizi giriniz: ", "Kaydol", "Cikis", ReturnName(playerid, 0), GetIP(playerid));
+				return 1;
+			}
+			if(TurkceKarakter(inputtext))
+			{
+				Hata(playerid, "Sifreniz Turkce karakter iceremez!");
+				Dialog_Show(playerid, Kayit, DIALOG_STYLE_INPUT, "{5762FF}WionS Roleplay - Kayit", "{fafafa}Sunucumuza hos geldiniz!\n\n{FF9900}Karakter Adi: {fafafa}%s\n\n{FF9900}IP Adresiniz: {fafafa}%s\n\n{fafafa}Kaydolmak icin sifrenizi giriniz: ", "Kaydol", "Cikis", ReturnName(playerid, 0), GetIP(playerid));
+				return 1;
+			}
+			if(!OzelKarakter(inputtext))
+			{
+				Hata(playerid, "Sifreniz ozel karakter icermelidir!");
+				Dialog_Show(playerid, Kayit, DIALOG_STYLE_INPUT, "{5762FF}WionS Roleplay - Kayit", "{fafafa}Sunucumuza hos geldiniz!\n\n{FF9900}Karakter Adi: {fafafa}%s\n\n{FF9900}IP Adresiniz: {fafafa}%s\n\n{fafafa}Kaydolmak icin sifrenizi giriniz: ", "Kaydol", "Cikis", ReturnName(playerid, 0), GetIP(playerid));
+				return 1;
+			}
+			SetPVarString(playerid, "Sifre", inputtext);
+			Dialog_Show(playerid, Yas, DIALOG_STYLE_INPUT, "{5762FF}Yasiniz: ", "{fafafa}%s adli karakterinizin yasini giriniz: ", "Devam", "Cikis", ReturnName(playerid, 0));
+		}
+	}
+	return 1;
+}
+
 public OnPlayerDisconnect(playerid, reason)
 {
    	if(!IsPlayerNPC(playerid))
@@ -491,6 +522,36 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 }
 
 //  --  [STOCKLAR]  --  //
+
+stock OzelKarakter(yazi[])
+{
+    for(new i = 0; i < strlen(yazi); i++)
+	{
+		switch(yazi[i])
+		{
+			case '!', '@', '#', '$','%','^','&','*','(',')','_','+','=','|','[',']','{','}','-','.','`','~','<','>','?',',','/': return 1;
+			default: continue;
+		}
+	}
+	return 0;
+}
+
+stock TurkceKarakter(yazi[])
+{
+	if(strfind(yazi, "ş", true) != -1) return 1;
+	if(strfind(yazi, "Ş", true) != -1) return 1;
+	if(strfind(yazi, "ç", true) != -1) return 1;
+	if(strfind(yazi, "Ç", true) != -1) return 1;
+	if(strfind(yazi, "ö", true) != -1) return 1;
+	if(strfind(yazi, "Ö", true) != -1) return 1;
+	if(strfind(yazi, "ğ", true) != -1) return 1;
+	if(strfind(yazi, "Ğ", true) != -1) return 1;
+	if(strfind(yazi, "ü", true) != -1) return 1;
+	if(strfind(yazi, "Ü", true) != -1) return 1;
+	if(strfind(yazi, "İ", true) != -1) return 1;
+	if(strfind(yazi, "ı", true) != -1) return 1;
+	return 0;
+}
 
 RGBAToARGB(rgba) return rgba >>> 8 | rgba << 24;
 
