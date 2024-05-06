@@ -127,7 +127,9 @@ enum pData
 	pSilahlar[13],
 	pMermiler[13],
 	pDinle,
-	pLSPDDuty
+	pLSPDDuty,
+	pBoy,
+	pKilo
 };
 
 new PlayerData[MAX_PLAYERS][pData];
@@ -373,6 +375,48 @@ Dialog:Cinsiyet(playerid, response, listitem, inputtext[])
 			Dialog_Show(playerid, TenRengi, DIALOG_STYLE_LIST, "{5762FF}Ten Renginiz: ", "{fafafa}Beyaz\n{fafafa}Esmer", "Devam", "Cikis");
 		}
 	}
+	return 1;
+}
+
+Dialog:TenRengi(playerid, response, listitem, inputtext[])
+{
+	if(response)
+	{
+		switch(listitem)
+		{
+			case 0:
+			{
+				PlayerData[playerid][pTen] = 1;
+				Dialog_Show(playerid, Boy, DIALOG_STYLE_INPUT, "{5762FF}Boyunuz: ", "{fafafa}%s adli karakterinizin boyunu giriniz: ", "Devam", "Cikis", ReturnName(playerid, 0));
+			}
+			case 1:
+			{
+				PlayerData[playerid][pTen] = 2;
+				Dialog_Show(playerid, Boy, DIALOG_STYLE_INPUT, "{5762FF}Boyunuz: ", "{fafafa}%s adli karakterinizin boyunu giriniz: ", "Devam", "Cikis", ReturnName(playerid, 0));
+			}
+		}
+	}
+	return 1;
+}
+
+Dialog:Boy(playerid, response, listitem, inputtext[])
+{
+	if(response)
+	{
+		if(!IsNumeric(inputtext) | strval(inputtext) < 100 || strval(inputtext) > 230)
+		{
+			Hata(playerid, "%s adli karakterinizin boyu 100-230 arasinda olmalidir!", ReturnName(playerid, 0));
+			Dialog_Show(playerid, Boy, DIALOG_STYLE_INPUT, "{5762FF}Boyunuz: ", "{fafafa}%s adli karakterinizin boyunu giriniz: ", "Devam", "Cikis", ReturnName(playerid, 0));
+			return 1;
+		}
+		PlayerData[playerid][pBoy] = strval(inputtext);
+		Dialog_Show(playerid, Kilo, DIALOG_STYLE_INPUT, "{5762FF}Kilonuz: ", "{fafafa}%s adli karakterinizin kilosunu giriniz: ", "Devam", "Cikis", ReturnName(playerid, 0));
+	}
+	return 1;
+}
+
+Dialog:Kilo(playerid, response, listitem, inputtext[])
+{
 	return 1;
 }
 
