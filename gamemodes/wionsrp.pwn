@@ -317,29 +317,27 @@ Dialog:Kayit(playerid, response, listitem, inputtext[])
 {
 	if(response)
 	{
-		if(response)
+		EkranTemizle(playerid);
+		if(strlen(inputtext) < 3 || strlen(inputtext) > 24)
 		{
-			if(strlen(inputtext) < 3 || strlen(inputtext) > 24)
-			{
-				Hata(playerid, "Sifreniz 3 haneden kisa veya 24 haneden uzun olamaz!");
-				Dialog_Show(playerid, Kayit, DIALOG_STYLE_INPUT, "{5762FF}WionS Roleplay - Kayit", "{fafafa}Sunucumuza hos geldiniz!\n\n{FF9900}Karakter Adi: {fafafa}%s\n\n{FF9900}IP Adresiniz: {fafafa}%s\n\n{fafafa}Kaydolmak icin sifrenizi giriniz: ", "Kaydol", "Cikis", ReturnName(playerid, 0), GetIP(playerid));
-				return 1;
-			}
-			if(TurkceKarakter(inputtext))
-			{
-				Hata(playerid, "Sifreniz Turkce karakter iceremez!");
-				Dialog_Show(playerid, Kayit, DIALOG_STYLE_INPUT, "{5762FF}WionS Roleplay - Kayit", "{fafafa}Sunucumuza hos geldiniz!\n\n{FF9900}Karakter Adi: {fafafa}%s\n\n{FF9900}IP Adresiniz: {fafafa}%s\n\n{fafafa}Kaydolmak icin sifrenizi giriniz: ", "Kaydol", "Cikis", ReturnName(playerid, 0), GetIP(playerid));
-				return 1;
-			}
-			if(!OzelKarakter(inputtext))
-			{
-				Hata(playerid, "Sifreniz ozel karakter icermelidir!");
-				Dialog_Show(playerid, Kayit, DIALOG_STYLE_INPUT, "{5762FF}WionS Roleplay - Kayit", "{fafafa}Sunucumuza hos geldiniz!\n\n{FF9900}Karakter Adi: {fafafa}%s\n\n{FF9900}IP Adresiniz: {fafafa}%s\n\n{fafafa}Kaydolmak icin sifrenizi giriniz: ", "Kaydol", "Cikis", ReturnName(playerid, 0), GetIP(playerid));
-				return 1;
-			}
-			SetPVarString(playerid, "Sifre", inputtext);
-			Dialog_Show(playerid, Yas, DIALOG_STYLE_INPUT, "{5762FF}Yasiniz: ", "{fafafa}%s adli karakterinizin yasini giriniz: ", "Devam", "Cikis", ReturnName(playerid, 0));
+			Hata(playerid, "Sifreniz 3 haneden kisa veya 24 haneden uzun olamaz!");
+			Dialog_Show(playerid, Kayit, DIALOG_STYLE_INPUT, "{5762FF}WionS Roleplay - Kayit", "{fafafa}Sunucumuza hos geldiniz!\n\n{FF9900}Karakter Adi: {fafafa}%s\n\n{FF9900}IP Adresiniz: {fafafa}%s\n\n{fafafa}Kaydolmak icin sifrenizi giriniz: ", "Kaydol", "Cikis", ReturnName(playerid, 0), GetIP(playerid));
+			return 1;
 		}
+		if(TurkceKarakter(inputtext))
+		{
+			Hata(playerid, "Sifreniz Turkce karakter iceremez!");
+			Dialog_Show(playerid, Kayit, DIALOG_STYLE_INPUT, "{5762FF}WionS Roleplay - Kayit", "{fafafa}Sunucumuza hos geldiniz!\n\n{FF9900}Karakter Adi: {fafafa}%s\n\n{FF9900}IP Adresiniz: {fafafa}%s\n\n{fafafa}Kaydolmak icin sifrenizi giriniz: ", "Kaydol", "Cikis", ReturnName(playerid, 0), GetIP(playerid));
+			return 1;
+		}
+		if(!OzelKarakter(inputtext))
+		{
+			Hata(playerid, "Sifreniz ozel karakter icermelidir!");
+			Dialog_Show(playerid, Kayit, DIALOG_STYLE_INPUT, "{5762FF}WionS Roleplay - Kayit", "{fafafa}Sunucumuza hos geldiniz!\n\n{FF9900}Karakter Adi: {fafafa}%s\n\n{FF9900}IP Adresiniz: {fafafa}%s\n\n{fafafa}Kaydolmak icin sifrenizi giriniz: ", "Kaydol", "Cikis", ReturnName(playerid, 0), GetIP(playerid));
+			return 1;
+		}
+		SetPVarString(playerid, "Sifre", inputtext);
+		Dialog_Show(playerid, Yas, DIALOG_STYLE_INPUT, "{5762FF}Yasiniz: ", "{fafafa}%s adli karakterinizin yasini giriniz: ", "Devam", "Cikis", ReturnName(playerid, 0));
 	}
 	return 1;
 }
@@ -348,6 +346,7 @@ Dialog:Yas(playerid, response, listitem, inputtext[])
 {
 	if(response)
 	{
+		EkranTemizle(playerid);
 		if(!IsNumeric(inputtext) || strval(inputtext) < 18 || strval(inputtext) > 100)
 		{
 			Hata(playerid, "%s adli karakterinizin yasi 18-100 arasinda olmalidir!", ReturnName(playerid, 0));
@@ -362,18 +361,16 @@ Dialog:Yas(playerid, response, listitem, inputtext[])
 
 Dialog:Cinsiyet(playerid, response, listitem, inputtext[])
 {
+	EkranTemizle(playerid);
 	if(response)
 	{
-		if(response)
-		{
-			PlayerData[playerid][pCinsiyet] = 1;
-			Dialog_Show(playerid, TenRengi, DIALOG_STYLE_LIST, "{5762FF}Ten Renginiz: ", "{fafafa}Beyaz\n{fafafa}Esmer", "Devam", "Cikis");
-		}
-		else
-		{
-			PlayerData[playerid][pCinsiyet] = 2;
-			Dialog_Show(playerid, TenRengi, DIALOG_STYLE_LIST, "{5762FF}Ten Renginiz: ", "{fafafa}Beyaz\n{fafafa}Esmer", "Devam", "Cikis");
-		}
+		PlayerData[playerid][pCinsiyet] = 1;
+		Dialog_Show(playerid, TenRengi, DIALOG_STYLE_LIST, "{5762FF}Ten Renginiz: ", "{fafafa}Beyaz\n{fafafa}Esmer", "Devam", "Cikis");
+	}
+	else
+	{
+		PlayerData[playerid][pCinsiyet] = 2;
+		Dialog_Show(playerid, TenRengi, DIALOG_STYLE_LIST, "{5762FF}Ten Renginiz: ", "{fafafa}Beyaz\n{fafafa}Esmer", "Devam", "Cikis");
 	}
 	return 1;
 }
@@ -382,6 +379,7 @@ Dialog:TenRengi(playerid, response, listitem, inputtext[])
 {
 	if(response)
 	{
+		EkranTemizle(playerid);
 		switch(listitem)
 		{
 			case 0:
@@ -403,6 +401,7 @@ Dialog:Boy(playerid, response, listitem, inputtext[])
 {
 	if(response)
 	{
+		EkranTemizle(playerid);
 		if(!IsNumeric(inputtext) | strval(inputtext) < 100 || strval(inputtext) > 230)
 		{
 			Hata(playerid, "%s adli karakterinizin boyu 100-230 arasinda olmalidir!", ReturnName(playerid, 0));
@@ -417,6 +416,17 @@ Dialog:Boy(playerid, response, listitem, inputtext[])
 
 Dialog:Kilo(playerid, response, listitem, inputtext[])
 {
+	if(response)
+	{
+		EkranTemizle(playerid);
+		if(!IsNumeric(inputtext) || strval(inputtext) < 30 || strval(inputtext) > 350)
+		{
+			Hata(playerid, "%s adli karakterinizin kilosu 30-350 arasinda olmalidir!", ReturnName(playerid, 0));
+			Dialog_Show(playerid, Kilo, DIALOG_STYLE_INPUT, "{5762FF}Kilonuz: ", "{fafafa}%s adli karakterinizin kilosunu giriniz: ", "Devam", "Cikis", ReturnName(playerid, 0));
+			return 1;
+		}
+		PlayerData[playerid][pKilo] = strval(inputtext);
+	}
 	return 1;
 }
 
@@ -598,6 +608,14 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 }
 
 //  --  [STOCKLAR]  --  //
+
+stock EkranTemizle(playerid)
+{
+	for(new i = 0; i < 100; i++)
+	{
+		SendClientMessageEx(playerid, -1, "");
+	}
+}
 
 IsNumeric(const str[])
 {
