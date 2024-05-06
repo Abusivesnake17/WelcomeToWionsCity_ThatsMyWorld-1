@@ -41,9 +41,9 @@
 
 #define function%0(%1) forward%0(%1); public%0(%1)
 
-#define MAX_BIRLIK 100 // Maksimum oluşturulabilecek birlik sayısıdır.
-#define MAX_BIRLIK 100 // Maksimum oluşturulabilecek birlik sayısıdır.
-#define MAX_ARAC 1200 // Maksimum oluşturulabilecek araç sayısıdır.
+#define MAX_BIRLIK 100 // Maksimum olusturulabilecek birlik sayisidir.
+#define MAX_BIRLIK 100 // Maksimum olusturulabilecek birlik sayisidir.
+#define MAX_ARAC 1200 // Maksimum olusturulabilecek araci sayisidir.
 
 #define BIRLIK_CETE      (1)
 #define BIRLIK_MAFYA     (2)
@@ -79,24 +79,22 @@ enum a_CopEnum
 
 new AttachCops[][a_CopEnum] = 
 {
-	{19141, "SWAT Kaskı1"},
-	{19142, "SWAT Zırhı1"},
+	{19141, "SWAT Kaski1"},
+	{19142, "SWAT Zirhi1"},
 	{18636, "Polis Kepi1"},
 	{19099, "Polis Kepi2"},
 	{19100, "Polis Kepi3"},
-	{18637, "Polis Kalkanı1"},
-	{19161, "Polis Şapkası1"},
-	{19162, "Polis Şapkası2"},
-	{19200, "Polis Kaskı1"},
-	{19138, "Polis Gözlüğü1"},
-	{19139, "Polis Gözlüğü2"},
-	{19140, "Polis Gözlüğü3"},
+	{18637, "Polis Kalkani1"},
+	{19161, "Polis Sapkasi1"},
+	{19162, "Polis Sapkasi2"},
+	{19200, "Polis Kaski1"},
+	{19138, "Polis Gozlugu1"},
+	{19139, "Polis Gozlugu2"},
+	{19140, "Polis Gozlugu3"},
 	{19347, "Rozet"},
 	{19472, "Gaz Maskesi"},
-	{19773, "Kılıf"},
-	{19785, "Senior Arma"},
-	{19521, ""},
-	{19520, ""}
+	{19773, "Kilif"},
+	{19785, "Senior Arma"}
 };
 
 enum pData
