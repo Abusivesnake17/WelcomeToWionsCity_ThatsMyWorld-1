@@ -360,6 +360,24 @@ Dialog:Yas(playerid, response, listitem, inputtext[])
 	return 1;
 }
 
+Dialog:Cinsiyet(playerid, response, listitem, inputtext[])
+{
+	if(response)
+	{
+		if(response)
+		{
+			PlayerData[playerid][pCinsiyet] = 1;
+			Dialog_Show(playerid, TenRengi, DIALOG_STYLE_LIST, "{5762FF}Ten Renginiz: ", "{fafafa}Beyaz\n{fafafa}Esmer", "Devam", "Cikis");
+		}
+		else
+		{
+			PlayerData[playerid][pCinsiyet] = 2;
+			Dialog_Show(playerid, TenRengi, DIALOG_STYLE_LIST, "{5762FF}Ten Renginiz: ", "{fafafa}Beyaz\n{fafafa}Esmer", "Devam", "Cikis");
+		}
+	}
+	return 1;
+}
+
 public OnPlayerDisconnect(playerid, reason)
 {
    	if(!IsPlayerNPC(playerid))
