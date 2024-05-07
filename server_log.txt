@@ -847,3 +847,239 @@ v0.3.7-R2, (C)2005-2015 SA-MP Team
 [01:07:23] [debug] #2 native CallLocalFunction () in samp-server.exe
 [01:07:23] [debug] #3 00000350 in public OnPlayerCommandText (playerid=0, cmdtext[]=@002161f4 "/dolap") at C:\Users\YÝÐÝTHAN\Desktop\Wions\WelcomeToWionsCity_ThatsMyWorld-1\pawno\include\izcmd.inc:120
 [01:07:36] [part] Javier_Taylor has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[19:32:43] filterscripts = ""  (string)
+[19:32:43] 
+[19:32:43] Server Plugins
+[19:32:43] --------------
+[19:32:43]  Loading plugin: crashdetect
+[19:32:43]   CrashDetect plugin 4.19.4
+[19:32:43]   Loaded.
+[19:32:43]  Loading plugin: mysql
+[19:32:44]  >> plugin.mysql: R41-4 successfully loaded.
+[19:32:44]   Loaded.
+[19:32:44]  Loading plugin: streamer
+[19:32:44] 
+
+*** Streamer Plugin v2.9.2 by Incognito loaded ***
+
+[19:32:44]   Loaded.
+[19:32:44]  Loading plugin: sscanf
+[19:32:44] 
+
+[19:32:44]  ===============================
+
+[19:32:44]       sscanf plugin loaded.     
+
+[19:32:44]          Version:  2.8.2        
+
+[19:32:44]    (c) 2012 Alex "Y_Less" Cole  
+
+[19:32:44]  ===============================
+
+[19:32:44]   Loaded.
+[19:32:44]  Loading plugin: FCNPC-DL
+[19:32:44] 
+[19:32:44] -------------------------------------------------
+[19:32:44]      FCNPC - Fully Controllable NPC v2.0.0
+[19:32:44]             Windows SA-MP 0.3.7 R2
+[19:32:44]            Jan  2 2019 at 23:09:26
+[19:32:44] 
+[19:32:44]   Author:       OrMisicL (2013 - 2015)
+[19:32:44]   Continued by: ziggi    (2016 - present)
+[19:32:44] 
+[19:32:44]   See full credits in the README.md file
+[19:32:44] -------------------------------------------------
+[19:32:44] 
+[19:32:44] Loading...
+[19:32:44] Failed. (Use FCNPC for this version of the server (now you are using FCNPC-DL))
+[19:32:44]   Failed.
+[19:32:44]  Loading plugin: SKY
+[19:32:44] Error: Unknown Windows server version (0048c8d0)
+
+[19:32:44]   Loaded.
+[19:32:44]  Loading plugin: pawn-memory
+[19:32:45] ========================
+[19:32:45] = Memory access plugin =
+[19:32:45] =       Made by BigETI =
+[19:32:45] = Loaded!              =
+[19:32:45] ========================
+[19:32:45]   Loaded.
+[19:32:45]  Loading plugin: pawnraknet
+[19:32:45] [Pawn.RakNet] 
+
+    | Pawn.RakNet 1.4.1 | 2016 - 2020
+    |--------------------------------
+    | Author and maintainer: urShadow
+
+
+    | Compiled: Jun 18 2020 at 14:19:11
+    |--------------------------------------------------------------
+    | Forum thread: https://forum.sa-mp.com/showthread.php?t=640306
+    |--------------------------------------------------------------
+    | Repository: https://github.com/urShadow/Pawn.RakNet
+    |--------------------------------------------------------------
+    | Wiki: https://github.com/urShadow/Pawn.RakNet/wiki
+
+[19:32:45]   Loaded.
+[19:32:45]  Loaded 7 plugins.
+
+[19:32:45] 
+[19:32:45] Filterscripts
+[19:32:45] ---------------
+[19:32:45]   Loaded 0 filterscripts.
+
+[19:32:45] [MySQL]: Veritabani baglantisi kuruluyor...
+[19:32:45] [MySQL]: Veritabani baglantisi basarili!
+[19:32:45] 
+----------------------------------
+[19:32:45] [DEVELOPER]: Abusivesnake
+[19:32:45] ----------------------------------
+
+[19:32:45] Number of vehicle models: 0
+[19:33:04] [connection] incoming connection: 127.0.0.1:56459 id: 0
+[19:33:19] [connection] incoming connection: 127.0.0.1:58341 id: 0
+[19:33:35] [connection] incoming connection: 127.0.0.1:63276 id: 0
+[19:33:50] [connection] incoming connection: 127.0.0.1:52742 id: 0
+[19:34:05] [connection] incoming connection: 127.0.0.1:50812 id: 0
+[19:34:05] [connection] incoming connection: 127.0.0.1:50814 id: 0
+[19:34:06] [join] Javier_Taylor has joined the server (0:127.0.0.1)
+[19:36:05] RCON (In-Game): Player #0 (Javier_Taylor) has logged in.
+[19:36:07] RCON (In-Game): Player [Javier_Taylor] sent command: gmx
+[19:36:19] [MySQL]: Veritabani baglantisi kuruluyor...
+[19:36:19] [MySQL]: Veritabani baglantisi basarili!
+[19:36:19] 
+----------------------------------
+[19:36:19] [DEVELOPER]: Abusivesnake
+[19:36:19] ----------------------------------
+
+[19:36:19] Number of vehicle models: 0
+[19:45:09] RCON (In-Game): Player [Javier_Taylor] sent command: gmx
+[19:45:21] [MySQL]: Veritabani baglantisi kuruluyor...
+[19:45:21] [MySQL]: Veritabani baglantisi basarili!
+[19:45:21] 
+----------------------------------
+[19:45:21] [DEVELOPER]: Abusivesnake
+[19:45:21] ----------------------------------
+
+[19:45:21] Number of vehicle models: 0
+[19:48:53] [part] Javier_Taylor has left the server (0:2)
+[19:48:53] Javier Taylor kullanicinin verilerinde degisiklik olmadi.
+[19:48:53] Javier Taylor kullanicinin verilerinde degisiklik olmadi.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[19:51:13] filterscripts = ""  (string)
+[19:51:13] 
+[19:51:13] Server Plugins
+[19:51:13] --------------
+[19:51:13]  Loading plugin: crashdetect
+[19:51:13]   CrashDetect plugin 4.19.4
+[19:51:13]   Loaded.
+[19:51:13]  Loading plugin: mysql
+[19:51:13]  >> plugin.mysql: R41-4 successfully loaded.
+[19:51:13]   Loaded.
+[19:51:13]  Loading plugin: streamer
+[19:51:13] 
+
+*** Streamer Plugin v2.9.2 by Incognito loaded ***
+
+[19:51:13]   Loaded.
+[19:51:13]  Loading plugin: sscanf
+[19:51:13] 
+
+[19:51:13]  ===============================
+
+[19:51:13]       sscanf plugin loaded.     
+
+[19:51:13]          Version:  2.8.2        
+
+[19:51:13]    (c) 2012 Alex "Y_Less" Cole  
+
+[19:51:13]  ===============================
+
+[19:51:13]   Loaded.
+[19:51:13]  Loading plugin: FCNPC-DL
+[19:51:13] 
+[19:51:13] -------------------------------------------------
+[19:51:13]      FCNPC - Fully Controllable NPC v2.0.0
+[19:51:13]             Windows SA-MP 0.3.7 R2
+[19:51:13]            Jan  2 2019 at 23:09:26
+[19:51:13] 
+[19:51:13]   Author:       OrMisicL (2013 - 2015)
+[19:51:13]   Continued by: ziggi    (2016 - present)
+[19:51:13] 
+[19:51:13]   See full credits in the README.md file
+[19:51:13] -------------------------------------------------
+[19:51:13] 
+[19:51:13] Loading...
+[19:51:13] Failed. (Use FCNPC for this version of the server (now you are using FCNPC-DL))
+[19:51:13]   Failed.
+[19:51:13]  Loading plugin: SKY
+[19:51:13] Error: Unknown Windows server version (0048c8d0)
+
+[19:51:13]   Loaded.
+[19:51:13]  Loading plugin: pawn-memory
+[19:51:13] ========================
+[19:51:13] = Memory access plugin =
+[19:51:13] =       Made by BigETI =
+[19:51:13] = Loaded!              =
+[19:51:13] ========================
+[19:51:13]   Loaded.
+[19:51:13]  Loading plugin: pawnraknet
+[19:51:13] [Pawn.RakNet] 
+
+    | Pawn.RakNet 1.4.1 | 2016 - 2020
+    |--------------------------------
+    | Author and maintainer: urShadow
+
+
+    | Compiled: Jun 18 2020 at 14:19:11
+    |--------------------------------------------------------------
+    | Forum thread: https://forum.sa-mp.com/showthread.php?t=640306
+    |--------------------------------------------------------------
+    | Repository: https://github.com/urShadow/Pawn.RakNet
+    |--------------------------------------------------------------
+    | Wiki: https://github.com/urShadow/Pawn.RakNet/wiki
+
+[19:51:13]   Loaded.
+[19:51:13]  Loaded 7 plugins.
+
+[19:51:13] 
+[19:51:13] Filterscripts
+[19:51:13] ---------------
+[19:51:13]   Loaded 0 filterscripts.
+
+[19:51:13] [MySQL]: Veritabani baglantisi kuruluyor...
+[19:51:13] [MySQL]: Veritabani baglantisi basarili!
+[19:51:13] 
+----------------------------------
+[19:51:13] [DEVELOPER]: Abusivesnake
+[19:51:13] ----------------------------------
+
+[19:51:13] Number of vehicle models: 0
+[19:51:33] [connection] incoming connection: 127.0.0.1:64268 id: 0
+[19:51:48] [connection] incoming connection: 127.0.0.1:49665 id: 0
+[19:52:03] [connection] incoming connection: 127.0.0.1:63496 id: 0
+[19:52:18] [connection] incoming connection: 127.0.0.1:60520 id: 0
+[19:52:34] [connection] incoming connection: 127.0.0.1:55704 id: 0
+[19:52:34] [connection] incoming connection: 127.0.0.1:55705 id: 0
+[19:52:34] [join] Javier_Taylor has joined the server (0:127.0.0.1)
+[19:53:29] RCON (In-Game): Player #0 (Javier_Taylor) has logged in.
+[19:54:27] [part] Javier_Taylor has left the server (0:2)
+[19:54:27] Javier Taylor kullanicinin verilerinde degisiklik olmadi.
+[19:54:27] Javier Taylor kullanicinin verilerinde degisiklik olmadi.

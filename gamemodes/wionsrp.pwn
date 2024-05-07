@@ -1365,13 +1365,42 @@ stock olusumetiket(fac)
 
 CMD:dolap(playerid, params[])
 {
-	if(GetFactionType(playerid) == BIRLIK_LSPD)
+	if(!IsPlayerInRangeOfPoint(playerid, 5.0, 261.8779, 109.7122, 1004.6172)) return Hata(playerid, "Dolaba yeterince yakin degilsiniz!");
+	new baslik[512], string[1050];
+	format(baslik, sizeof(baslik), "{%s}(%s){fafafa}", GetFactionColor(playerid), olusumetiket(Birlikler[PlayerData[playerid][pFaction]][birlikTip]));
+	format(string, sizeof(string), "{%s}{FFFFFF}Isbasi\n{%s}{FFFFFF}Uniformalar\n{%s}{FFFFFF}Ekipmanlar\n{FF0000}{FFFFFF}Silahlari Sifirla", GetFactionColor(playerid), GetFactionColor(playerid), GetFactionColor(playerid));
+	Dialog_Show(playerid, LSPDDolap, DIALOG_STYLE_LIST, baslik, string, "Onayla", "Kapat");
+	return 1;
+}
+
+CMD:gmx(playerid, params[])
+{
+	if(!IsPlayerAdmin(playerid)) return 1;
+	for(new i = 0; i < IsPlayerConnected(i); i++)
 	{
-		if(!IsPlayerInRangeOfPoint(playerid, 5.0, 261.8779, 109.7122, 1004.6172)) return Hata(playerid, "Dolaba yeterince yakın değilsiniz!");
-		new baslik[512], string[1050];
-		format(baslik, sizeof(baslik), "{%s}(%s){fafafa}", GetFactionColor(playerid), olusumetiket(Birlikler[PlayerData[playerid][pFaction]][birlikTip]));
-		format(string, sizeof(string), "{%s}» {FFFFFF}Isbasi\n{%s}» {FFFFFF}Uniformalar\n{%s}» {FFFFFF}Ekipmanlar\n{FF0000}» {FFFFFF}Silah Sifirla", GetFactionColor(playerid), GetFactionColor(playerid), GetFactionColor(playerid));
-		Dialog_Show(playerid, LSPDDolap, DIALOG_STYLE_LIST, baslik, string, "Onayla", "Kapat");
+		SendClientMessageEx(i, -1, "{3EC9F7}30 saniye icerisinde sunucu yeniden baslatilacak...");
+		SendClientMessageEx(i, -1, "{3EC9F7}Guvenli cikis yapmak icin /q");
+	}
+	SetTimer("ServerRestart", 30000, true);
+	return 1;
+}
+
+function ServerRestart()
+{
+	for(new i = 0; i < IsPlayerConnected(i); i++)
+	{
+		SendClientMessageEx(i, -1, "{3EC9F7}Sunucu yeniden baslatiliyor...");
+	}
+	SetTimer("ServerRestart2", 1000, true);
+}
+
+function ServerRestart2()
+{
+	for(new i = 0; i < IsPlayerConnected(i); i++)
+	{
+		Oyuncu_Kaydet(i);
+		Bilgi(i, "Verileriniz kaydedilerek kicklendiniz!");
+		Kick(i);
 	}
 	return 1;
 }
