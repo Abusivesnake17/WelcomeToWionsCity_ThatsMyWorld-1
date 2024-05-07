@@ -1365,11 +1365,14 @@ stock olusumetiket(fac)
 
 CMD:dolap(playerid, params[])
 {
-	if(!IsPlayerInRangeOfPoint(playerid, 5.0, 261.8779, 109.7122, 1004.6172)) return Hata(playerid, "Dolaba yeterince yakin degilsiniz!");
-	new baslik[512], string[1050];
-	format(baslik, sizeof(baslik), "{%s}(%s){fafafa}", GetFactionColor(playerid), olusumetiket(Birlikler[PlayerData[playerid][pFaction]][birlikTip]));
-	format(string, sizeof(string), "{%s}{FFFFFF}Isbasi\n{%s}{FFFFFF}Uniformalar\n{%s}{FFFFFF}Ekipmanlar\n{FF0000}{FFFFFF}Silahlari Sifirla", GetFactionColor(playerid), GetFactionColor(playerid), GetFactionColor(playerid));
-	Dialog_Show(playerid, LSPDDolap, DIALOG_STYLE_LIST, baslik, string, "Onayla", "Kapat");
+	if(GetFactionType(playerid) == BIRLIK_LSPD)
+	{
+		if(!IsPlayerInRangeOfPoint(playerid, 5.0, 261.8779, 109.7122, 1004.6172)) return Hata(playerid, "Dolaba yeterince yakin degilsiniz!");
+		new baslik[512], string[1050];
+		format(baslik, sizeof(baslik), "{%s}(%s){fafafa}", GetFactionColor(playerid), olusumetiket(Birlikler[PlayerData[playerid][pFaction]][birlikTip]));
+		format(string, sizeof(string), "{%s}{FFFFFF}Isbasi\n{%s}{FFFFFF}Uniformalar\n{%s}{FFFFFF}Ekipmanlar\n{FF0000}{FFFFFF}Silahlari Sifirla", GetFactionColor(playerid), GetFactionColor(playerid), GetFactionColor(playerid));
+		Dialog_Show(playerid, LSPDDolap, DIALOG_STYLE_LIST, baslik, string, "Onayla", "Kapat");
+	}
 	return 1;
 }
 
@@ -1469,31 +1472,30 @@ CMD:birliksil(playerid, params[])
 	return 1;
 }
 
-CMD:setleader(playerid, params[])
+CMD:setleader(playerid,params[])
 {
-    new targetid, factionid, sqlid;
-    if(!IsPlayerAdmin(playerid)) return YetkinizYok(playerid);
-    if(sscanf(params, "ui", targetid, sqlid)) return Kullanim(playerid, "/setleader [ID/Isim] [SQL ID] (-1 yazarsan liderlikten atilir)");
-	if(factionid == INVALID_FACTION_ID) return Hata(playerid, "Hatali birlik SQL ID!");
-    factionid = GetFactionIDBySQL(sqlid);
-    if(factionid == -1)
-    {
-        BirliktenAt(targetid);
-        Bilgi(playerid, "%s adlı oyuncuyu birlik liderliğinden attınız.", ReturnName(targetid, 0));
-        Bilgi(targetid, "%s adlı yetkili sizi birlik liderliğinden attı.", ReturnName(playerid, 0));
-        Oyuncu_Kaydet(targetid);
-    }
-    else
-    {
-        BirliktenAt(targetid);
-        PlayerData[targetid][pFaction] = factionid;
-        PlayerData[targetid][pFactionRutbe] = Birlikler[factionid][birlikRutbeler];
-        PlayerData[targetid][pFactionDivizyon] = 0;
-        Bilgi(playerid, "%s adlı oyuncuyu \"%s\" adlı birliğin lideri yaptınız.", ReturnName(targetid, 0), Birlikler[factionid][birlikAd]);
-        Bilgi(targetid, "%s adlı yetkili seni \"%s\" adlı birliğin lideri yaptı.", ReturnName(playerid, 0), Birlikler[factionid][birlikAd]);
-        Oyuncu_Kaydet(targetid);
-    }
-    return 1;
+	new pid,id;
+	if(!IsPlayerAdmin(playerid)) return YetkinizYok(playerid);
+	if(sscanf(params,"ui",pid,id)) return Kullanim(playerid,"/setleader [ID/Isim] [Birlik ID] (-1 yazarsan liderlikten atilir)");
+	if ((id < -1 || id >= MAX_BIRLIK) || (id != -1 && !Birlikler[id][birlikExists])) return Hata(playerid,"Hatali faction ID!");
+	if (id == -1)
+	{
+	    BirliktenAt(pid);
+	    Bilgi(playerid, "%s adli oyuncuyu birlik liderliginden attiniz.", ReturnName(pid, 0));
+    	Bilgi(pid, "%s adli yetkili sizi birlik liderliginden atti.", ReturnName(playerid, 0));
+    	Oyuncu_Kaydet(id);
+	}
+	else
+	{
+	    BirliktenAt(pid);
+	    PlayerData[pid][pFaction] = id;
+	    PlayerData[pid][pFactionRutbe] = Birlikler[id][birlikRutbeler];
+	    PlayerData[pid][pFactionDivizyon] = 0;
+	    Bilgi(playerid, "%s adli oyuncuyu \"%s\" adli birligin lideri yaptiniz.", ReturnName(pid, 0),Birlikler[id][birlikAd]);
+	    Bilgi(pid, "%s adli yetkili seni \"%s\" adli birligin lideri yapti.", ReturnName(playerid, 0),Birlikler[id][birlikAd]);
+	    Oyuncu_Kaydet(pid);
+	}
+	return 1;
 }
 
 CMD:setskin(playerid, params[])
