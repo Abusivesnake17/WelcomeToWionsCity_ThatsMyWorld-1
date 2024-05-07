@@ -33,6 +33,7 @@
 #include <streamer>
 #include <YSI\y_iterate>
 #include <renkler>
+#include <weapon-config>
 
 #define SQL_HOST "localhost"
 #define SQL_USER "root"
@@ -218,6 +219,7 @@ new Birlikler[MAX_BIRLIK][BirlikData];
 new BirlikRutbe[MAX_BIRLIK][15][32];
 new BirlikDivizyon[MAX_BIRLIK][5][20];
 new Float:AksesuarData[MAX_PLAYERS][10][10];
+new pbOda[MAX_PLAYERS];
 
 AntiDeAMX()
 {
@@ -291,7 +293,7 @@ public OnPlayerConnect(playerid)
 	if(IsPlayerNPC(playerid)) return 1;
 	if(!IsValidRoleplayName(ReturnName(playerid)))
 	{
-		Hata(playerid, "Isminiz roleplaye uygun degil! ( Ornek: Javier_Taylor )");
+		Hata(playerid, "Isminiz roleplaye uygun degil! ( Ornek: Gordon_Kennedy )");
 		Kick(playerid);
 		return 1;
 	}
@@ -432,6 +434,7 @@ Dialog:Kilo(playerid, response, listitem, inputtext[])
 
 public OnPlayerDisconnect(playerid, reason)
 {
+	Oyuncu_Kaydet(playerid);
    	if(!IsPlayerNPC(playerid))
    	{
 	   	new sebep[30];
@@ -449,6 +452,14 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerSpawn(playerid)
 {
+	if(GetPVarInt(playerid, "Kayit") == 1)
+	{
+		// Kayit olundugunda eklenecek olan kodlar buraya aktarılacak!! ( Dont forget )
+	}
+	if(GetPVarInt(playerid, "Logged") == 1)
+	{
+		// Kayitli hesapla giris yapildiginda olacak kodlar buraya aktarılacak!! ( Dont forget )
+	}
 	return 1;
 }
 
@@ -574,6 +585,17 @@ public OnRconLoginAttempt(ip[], password[], success)
 
 public OnPlayerUpdate(playerid)
 {
+    if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_USEJETPACK && PlayerData[playerid][pAdmin] < 1)
+	{
+ 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
+	}
+	if((GetPlayerWeapon(playerid) == 18 || GetPlayerWeapon(playerid) == 35 || GetPlayerWeapon(playerid) == 36 || GetPlayerWeapon(playerid) == 37 || GetPlayerWeapon(playerid) == 38 || GetPlayerWeapon(playerid) == 39) && PlayerData[playerid][pAdmin] < 1 && pbOda[playerid] == -1)
+	{
+	    AdminMessage(COLOR_LIGHTRED, "AdmLog: %s adli oyuncu yasakli silah kullanimi sebebiyle sistem tarafindan yasaklandi. (Silah: %s)", ReturnDate(), Player_GetName(playerid), ReturnWeaponName(GetPlayerWeapon(playerid)));
+	    ResetWeapons(playerid);
+	    AddBan(GetIP(playerid), Player_GetName(playerid), "", "Sistem", 0, "Silah Hilesi");
+	    Kick(playerid);
+	}
 	return 1;
 }
 
@@ -608,6 +630,146 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 }
 
 //  --  [STOCKLAR]  --  //
+
+stock GetWeapon(playerid)
+{
+	new weaponid = GetPlayerWeapon(playerid);
+	if(1 <= weaponid <= 46 && PlayerData[playerid][pSilahlar][g_aWeaponSlots[weaponid]] == weaponid) return weaponid;
+	return 0;
+}
+
+stock GetWeaponModel(weaponid) 
+{
+    new const g_aWeaponModels[] = 
+	{
+		0, 331, 333, 334, 335, 336, 337, 338, 339, 341, 321, 322, 323, 324,
+		325, 326, 342, 343, 344, 0, 0, 0, 346, 347, 348, 349, 350, 351, 352,
+		353, 355, 356, 372, 357, 358, 359, 360, 361, 362, 363, 364, 365, 366,
+		367, 368, 368, 371
+    };
+    if(1 <= weaponid <= 46) return g_aWeaponModels[weaponid];
+	return 0;
+}
+
+stock ParaVer(playerid,miktar,bildirim = 1)
+{
+	PlayerData[playerid][pCash] += miktar;
+	GivePlayerMoney(playerid,miktar);
+	new str[50];
+	if(bildirim == 1 && miktar > -1)
+	{
+	    format(str,sizeof(str),"~g~+%s",FormatNumber(miktar));
+	    GameTextForPlayer(playerid,str,1000,1);
+	}
+ 	if(bildirim == 1 && miktar < 0)
+ 	{
+ 	    format(str,sizeof(str),"~r~%s",FormatNumber(miktar));
+	    GameTextForPlayer(playerid,str,1000,1);
+ 	}
+	return 1;
+}
+stock FormatNumber(number, prefix[] = "$")
+{
+	static value[32], length;
+	format(value, sizeof(value), "%d", (number < 0) ? (-number) : (number));
+	if((length = strlen(value)) > 3)
+	{
+		for(new i = length, l = 0; --i >= 0; l ++)
+		{
+		    if ((l > 0) && (l % 3 == 0)) strins(value, ",", i + 1);
+		}
+	}
+	if(prefix[0] != 0) strins(value, prefix, 0);
+	if(number < 0) strins(value, "-", 0);
+	return value;
+}
+
+stock spamProtect(playerid, const szSpam[], iTime) 
+{
+	static s_szPVar[32], s_iPVar;
+	format(s_szPVar, sizeof(s_szPVar), "pv_iSpam_%s", szSpam);
+	s_iPVar = GetPVarInt(playerid, s_szPVar);
+	if((GetTickCount() - s_iPVar) < iTime * 1000) 
+	{
+		return 0;
+	} 
+	else 
+	{
+		SetPVarInt(playerid, s_szPVar, GetTickCount());
+	}
+	return 1;
+}
+
+stock AddBan(bannedip[], bannedname[], hddserial[], bannedby[], gun, sebep[])
+{
+	new query[600];
+	format(query, sizeof(query), "INSERT INTO `bans` (`IP`, `Ad`, `hddserial`, `Banlayan`, `Sure`, `Sebep`, `BanlanmaTarihi`) VALUES ('%s', '%s', '%s', '%s', '%d', '%s', '%s')", bannedip, bannedname, hddserial, bannedby, gun, sebep, ReturnDate());
+	mysql_query(mysqlC, query, false);
+	if(strlen(bannedname) > 3)
+	{
+	    format(query, sizeof(query), "UPDATE `oyuncular` SET `Ban` = '1' WHERE `Isim` = '%s'", bannedname);
+	    mysql_query(mysqlC, query, false);
+	}
+	return 1;
+}
+
+stock AdminMessage(color, const str[], {Float,_}:...)
+{
+	static args, start, end, string[144];
+	#emit LOAD.S.pri 8
+	#emit STOR.pri args
+	if(args > 8)
+	{
+		#emit ADDR.pri str
+		#emit STOR.pri start
+	    for(end = start + (args - 8); end > start; end -= 4)
+		{
+	        #emit LREF.pri end
+	        #emit PUSH.pri
+		}
+		#emit PUSH.S str
+		#emit PUSH.C 144
+		#emit PUSH.C string
+		#emit LOAD.S.pri 8
+		#emit ADD.C 4
+		#emit PUSH.pri
+		#emit SYSREQ.C format
+		#emit LCTRL 5
+		#emit SCTRL 4
+        foreach(new i : Player)
+		{
+			if(PlayerData[i][pAdmin] >= 1) 
+			{
+  				SendClientMessage(i, color, string);
+			}
+		}
+		return 1;
+	}
+ 	foreach (new i : Player)
+	{
+		if(PlayerData[i][pAdmin] >= 1) 
+		{
+			SendClientMessage(i, color, str);
+		}
+	}
+	return 1;
+}
+
+ReturnDate()
+{
+	static date[36];
+	getdate(date[2], date[1], date[0]);
+	gettime(date[3], date[4], date[5]);
+	format(date, sizeof(date), "%02d/%02d/%d, %02d:%02d", date[0], date[1], date[2], date[3], date[4]);
+	return date;
+}
+
+stock Player_GetName(playerid)
+{
+	new name[MAX_PLAYER_NAME+1];
+	GetPlayerName(playerid, name, sizeof(name));
+	return name;
+}
 
 stock EkranTemizle(playerid)
 {
