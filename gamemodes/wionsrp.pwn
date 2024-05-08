@@ -221,6 +221,34 @@ new BirlikDivizyon[MAX_BIRLIK][5][20];
 new Float:AksesuarData[MAX_PLAYERS][10][10];
 new pbOda[MAX_PLAYERS];
 
+const ID_RPC = 20;
+const RPC_Damage = 115;
+
+IRawPacket:ID_RPC(playerid, BitStream:bs)
+{
+    new rpcid, numberOfBitsOfData;
+    BS_ReadValue(bs, PR_IGNORE_BITS, 8, PR_UINT8, rpcid, PR_CUINT32, numberOfBitsOfData);
+    if(rpcid == RPC_Damage)
+    {
+        new bGiveOrTake;
+        new uiPlayerID;
+        new Float:fDamageAmountToSend;
+        new iWeaponID;
+        new iBodyPart;
+        BS_ReadValue(bs, PR_BOOL, bGiveOrTake);
+        BS_ReadValue(bs, PR_UINT8, uiPlayerID);
+        BS_ReadValue(bs, PR_FLOAT, fDamageAmountToSend);
+        BS_ReadValue(bs, PR_UINT32, iWeaponID);
+        BS_ReadValue(bs, PR_UINT8, iBodyPart);
+        if(uiPlayerID == 255) return false;
+        if(fDamageAmountToSend == 889126912.000000) return false;
+        if(iWeaponID == 13888) return false;
+        if(iWeaponID == 1024) return false;
+        if(iWeaponID == 1092) return false;
+    }
+    return 1;
+}
+
 AntiDeAMX()
 {
     new Abusivesnake[][] =
