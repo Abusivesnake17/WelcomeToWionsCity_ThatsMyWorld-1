@@ -401,3 +401,102 @@ v0.3.7-R2, (C)2005-2015 SA-MP Team
 
 [00:26:05] Number of vehicle models: 0
 [00:27:00] [part] Javier_Taylor has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[00:41:44] filterscripts = ""  (string)
+[00:41:44] 
+[00:41:44] Server Plugins
+[00:41:44] --------------
+[00:41:44]  Loading plugin: crashdetect
+[00:41:44]   CrashDetect plugin 4.19.4
+[00:41:44]   Loaded.
+[00:41:44]  Loading plugin: mysql
+[00:41:44]  >> plugin.mysql: R41-4 successfully loaded.
+[00:41:44]   Loaded.
+[00:41:44]  Loading plugin: streamer
+[00:41:44] 
+
+*** Streamer Plugin v2.9.2 by Incognito loaded ***
+
+[00:41:44]   Loaded.
+[00:41:44]  Loading plugin: sscanf
+[00:41:44] 
+
+[00:41:44]  ===============================
+
+[00:41:44]       sscanf plugin loaded.     
+
+[00:41:44]          Version:  2.8.2        
+
+[00:41:44]    (c) 2012 Alex "Y_Less" Cole  
+
+[00:41:44]  ===============================
+
+[00:41:44]   Loaded.
+[00:41:44]  Loading plugin: FCNPC-DL
+[00:41:44] 
+[00:41:44] -------------------------------------------------
+[00:41:44]      FCNPC - Fully Controllable NPC v2.0.0
+[00:41:44]             Windows SA-MP 0.3.7 R2
+[00:41:44]            Jan  2 2019 at 23:09:26
+[00:41:44] 
+[00:41:44]   Author:       OrMisicL (2013 - 2015)
+[00:41:44]   Continued by: ziggi    (2016 - present)
+[00:41:44] 
+[00:41:44]   See full credits in the README.md file
+[00:41:44] -------------------------------------------------
+[00:41:44] 
+[00:41:44] Loading...
+[00:41:44] Failed. (Use FCNPC for this version of the server (now you are using FCNPC-DL))
+[00:41:44]   Failed.
+[00:41:44]  Loading plugin: SKY
+[00:41:44] Error: Unknown Windows server version (0048c8d0)
+
+[00:41:44]   Loaded.
+[00:41:44]  Loading plugin: pawn-memory
+[00:41:44] ========================
+[00:41:44] = Memory access plugin =
+[00:41:44] =       Made by BigETI =
+[00:41:44] = Loaded!              =
+[00:41:44] ========================
+[00:41:44]   Loaded.
+[00:41:44]  Loading plugin: pawnraknet
+[00:41:44] [Pawn.RakNet] 
+
+    | Pawn.RakNet 1.4.1 | 2016 - 2020
+    |--------------------------------
+    | Author and maintainer: urShadow
+
+
+    | Compiled: Jun 18 2020 at 14:19:11
+    |--------------------------------------------------------------
+    | Forum thread: https://forum.sa-mp.com/showthread.php?t=640306
+    |--------------------------------------------------------------
+    | Repository: https://github.com/urShadow/Pawn.RakNet
+    |--------------------------------------------------------------
+    | Wiki: https://github.com/urShadow/Pawn.RakNet/wiki
+
+[00:41:44]   Loaded.
+[00:41:44]  Loaded 7 plugins.
+
+[00:41:44] 
+[00:41:44] Filterscripts
+[00:41:44] ---------------
+[00:41:44]   Loaded 0 filterscripts.
+
+[00:41:45] 
+----------------------------------
+[00:41:45] [DEVELOPER]: Abusivesnake
+[00:41:45] ----------------------------------
+
+[00:41:45] Number of vehicle models: 0
+[00:41:58] [connection] incoming connection: 127.0.0.1:52083 id: 0
+[00:41:58] [connection] incoming connection: 127.0.0.1:52084 id: 0
+[00:41:59] [join] Javier_Taylor has joined the server (0:127.0.0.1)
