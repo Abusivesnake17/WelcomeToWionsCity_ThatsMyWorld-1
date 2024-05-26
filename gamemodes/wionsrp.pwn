@@ -44,7 +44,6 @@
 #include <kick-fix>
 #include <physics>
 #include <wristwatch>
-#include <wristwatch>
 
 #define SQL_HOST "localhost"
 #define SQL_USER "root"
@@ -141,6 +140,23 @@ public OnPlayerRequestClass(playerid, classid)
 
 public OnPlayerConnect(playerid)
 {
+	PlayAudioStreamForPlayer(playerid, SERVER_MUZIK);
+	PlayerTextDrawShow(playerid, GirisTD[playerid][0]);
+	if(IsPlayerNPC(playerid)) return 0;
+	pDrunkLevelLast[playerid] = 0;
+    pFPS[playerid] = 0;
+    Download[playerid] = 0;
+	new version[512];
+	GetPlayerVersion(playerid, version, sizeof(version));
+
+	if(!strcmp(version, "0.3.7", false))
+	{
+		MobilKullanici[playerid] = 1;
+	}
+	else
+	{
+		MobilKullanici[playerid] = 0;
+	}
 	WionS_Global[0] = TextDrawCreate(311.000, 433.000, "WionS Roleplay");
 	TextDrawLetterSize(WionS_Global[0], 0.300, 1.500);
 	TextDrawAlignment(WionS_Global[0], 2);
@@ -192,6 +208,10 @@ public OnPlayerDisconnect(playerid, reason)
 		SetPlayerVirtualWorld(playerid, PlayerData[playerid][pCikisVw]);
 		Mesaj(playerid,"Karakteriniz oluşturuldu, yardıma ihtiyacınız olduğunda (/destek) komutunu kullanabilirsiniz.");
 		Mesaj(playerid, "İyi roller dileriz.");
+	}
+	if(GetPVarInt(playerid, "Logged") == 1)
+	{
+		
 	}
 	return 1;
 }

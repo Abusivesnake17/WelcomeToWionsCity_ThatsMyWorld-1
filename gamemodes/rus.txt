@@ -1,8 +1,8 @@
-wionsrp.pwn(35) : ôàòàëüíàÿ îøèáêà 100: íåâîçìîæíî ïğî÷åñòü ôàéë: "renkler"
-
-Êîìïèëÿöèÿ îñòàíîâëåíà.
-
+C:\Users\YİĞİTHAN\Desktop\Roycen Roleplay\pawno\include\mSelection.inc(501) : îøèáêà 017: íåîáúÿâëåííûé ñèìâîë "HideModelSelectionMenu"
+C:\Users\YİĞİTHAN\Desktop\Roycen Roleplay\pawno\include\mSelection.inc(507) : îøèáêà 017: íåîáúÿâëåííûé ñèìâîë "HideModelSelectionMenu"
+C:\Users\YİĞİTHAN\Desktop\Roycen Roleplay\pawno\include\mSelection.inc(565) : îøèáêà 017: íåîáúÿâëåííûé ñèìâîë "HideModelSelectionMenu"
+C:\Users\YİĞİTHAN\Desktop\Roycen Roleplay\pawno\include\mSelection.inc(573) : îøèáêà 017: íåîáúÿâëåííûé ñèìâîë "HideModelSelectionMenu"
 Pawn compiler 3.2.3664	 	 	Copyright (c) 1997-2016, ITB CompuPhase
 
 
-Îøèáîê:1.
+Îøèáîê:4.
